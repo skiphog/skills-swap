@@ -2,7 +2,7 @@
 
 namespace App\System;
 
-use Skiphog\Router;
+use Wardex\Router\Router;
 
 /**
  * Class Bootstrap

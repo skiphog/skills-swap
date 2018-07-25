@@ -1,6 +1,6 @@
 <?php
 
-use Skiphog\Router;
+use Wardex\Router\Router;
 
 /**
  * @var Router $route

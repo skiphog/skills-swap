@@ -1,7 +1,7 @@
 <?php
 
-use Skiphog\Cache;
 use Skiphog\Container;
+use Wardex\Cache\Cache;
 
 Container::set('cache', function () {
     $config = config('cache');

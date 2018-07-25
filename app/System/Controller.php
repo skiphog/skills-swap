@@ -2,7 +2,7 @@
 
 namespace App\System;
 
-use Skiphog\Request;
+use Wardex\Http\Request;
 use App\Exceptions\ForbiddenException;
 
 /**

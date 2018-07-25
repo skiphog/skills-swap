@@ -36,7 +36,7 @@ function db()
 }
 
 /**
- * @return \Skiphog\Cache
+ * @return \Wardex\Cache\Cache
  */
 function cache()
 {
@@ -44,41 +44,41 @@ function cache()
 }
 
 /**
- * @return \Skiphog\Request
+ * @return \Wardex\Http\Request
  */
 function request()
 {
-    return app(\Skiphog\Request::class);
+    return app(\Wardex\Http\Request::class);
 }
 
 /**
  * @param string $url
  * @param int    $code
  *
- * @return \Skiphog\Response
+ * @return \Wardex\Http\Response
  */
 function redirect($url, $code = 302)
 {
-    return (new \Skiphog\Response())->redirect($url, $code);
+    return (new \Wardex\Http\Response())->redirect($url, $code);
 }
 
 /**
- * @return \Skiphog\Response
+ * @return \Wardex\Http\Response
  */
 function back()
 {
-    return (new \Skiphog\Response())->back();
+    return (new \Wardex\Http\Response())->back();
 }
 
 /**
  * @param mixed $data
  * @param int   $code
  *
- * @return \Skiphog\Response
+ * @return \Wardex\Http\Response
  */
 function json($data, $code = 200)
 {
-    return (new \Skiphog\Response())->json($data, $code);
+    return (new \Wardex\Http\Response())->json($data, $code);
 }
 
 /**
@@ -87,7 +87,7 @@ function json($data, $code = 200)
  */
 function abort($code = 404, $data = null)
 {
-    (new \Skiphog\Response())->abort($code, $data);
+    (new \Wardex\Http\Response())->abort($code, $data);
 }
 
 /** @noinspection PhpDocMissingThrowsInspection */
@@ -100,18 +100,18 @@ function abort($code = 404, $data = null)
 function render($name, array $params = [])
 {
     /** @noinspection PhpUnhandledExceptionInspection */
-    return (new \Skiphog\View(config('view')['path']))->render($name, $params);
+    return (new \Wardex\View\View(config('view')['path']))->render($name, $params);
 }
 
 /**
  * @param string $name
  * @param array  $params
  *
- * @return \Skiphog\Response
+ * @return \Wardex\Http\Response
  */
 function view($name, array $params = [])
 {
-    return (new \Skiphog\Response())->setData(render($name, $params));
+    return (new \Wardex\Http\Response())->setData(render($name, $params));
 }
 
 /**
