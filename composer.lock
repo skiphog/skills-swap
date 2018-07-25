@@ -78,11 +78,11 @@
         },
         {
             "name": "skiphog/http",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/skiphog/http",
-                "reference": "df8f211f9089d0c99fa98aa1b9f1dea79b678761"
+                "reference": "693a56b88638e5395c4aa302cf58d8df69652c78"
             },
             "require": {
                 "php": "^7.1"
@@ -109,7 +109,7 @@
             "keywords": [
                 "Http"
             ],
-            "time": "2018-07-02T13:14:14+00:00"
+            "time": "2018-07-25T13:43:44+00:00"
         },
         {
             "name": "skiphog/router",

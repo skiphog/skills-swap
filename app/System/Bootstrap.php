@@ -2,9 +2,7 @@
 
 namespace App\System;
 
-use App\System\Cache\Cache;
 use Skiphog\Router;
-use Skiphog\Container;
 
 /**
  * Class Bootstrap
@@ -16,10 +14,8 @@ class Bootstrap
     public function start(): void
     {
         try {
-            $request = request();
-            [$controller, $action, $attributes] = Router::load(__DIR__ . '/../route.php')->match();
-            $request->setAttributes($attributes);
-
+            [$controller, $action, $attributes] = Router::load(\dirname(__DIR__) . '/route.php')->match();
+            $request = request()->setAttributes($attributes);
             $controller = $this->getController($controller);
 
             $this->setRegistry();
@@ -51,21 +47,6 @@ class Bootstrap
 
     protected function setRegistry(): void
     {
-        Container::set('cache', function () {
-            $class = config('cache_driver');
-
-            return new Cache(new $class);
-        });
-
-        Container::set('content', function () {
-            $languages = config('languages');
-
-            $file = isset($_COOKIE['lang']) && array_key_exists($_COOKIE['lang'], $languages) ?
-                $languages[$_COOKIE['lang']] :
-                $languages['ru'];
-
-            /** @noinspection PhpIncludeInspection */
-            return require $file;
-        });
+        require \dirname(__DIR__) . '/register.php';
     }
 }
