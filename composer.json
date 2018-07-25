@@ -1,0 +1,28 @@
+{
+  "require": {
+    "php": "^7.2",
+    "skiphog/container": "^1.0"
+  },
+  "require-dev": {},
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    },
+    "files": [
+      "support/functions.php"
+    ]
+  },
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/skiphog/container"
+    }
+  ],
+  "config": {
+    "preferred-install": "dist",
+    "sort-packages": true,
+    "optimize-autoloader": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
