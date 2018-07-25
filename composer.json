@@ -1,18 +1,37 @@
 {
   "require": {
     "php": "^7.2",
+    "skiphog/http": "^1.0",
+    "skiphog/view": "^1.0",
+    "skiphog/cache": "^1.0",
+    "skiphog/router": "^1.0",
     "skiphog/container": "^1.0"
   },
-  "require-dev": {},
   "autoload": {
     "psr-4": {
       "App\\": "app/"
     },
     "files": [
-      "support/functions.php"
+      "app/System/functions.php"
     ]
   },
   "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/skiphog/http"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/skiphog/view"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/skiphog/cache"
+    },
+    {
+      "type": "git",
+      "url": "https://github.com/skiphog/router"
+    },
     {
       "type": "git",
       "url": "https://github.com/skiphog/container"

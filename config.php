@@ -31,7 +31,7 @@ return [
      * Кеш
      */
     'cache'  => [
-        'driver' => \App\System\Cache\FileDriver::class,
+        'driver' => \Skiphog\FileDriver::class,
         'path'   => __DIR__ . '/cache'
     ],
 

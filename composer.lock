@@ -1,0 +1,195 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "01c6314a3845212753db9095af30d791",
+    "packages": [
+        {
+            "name": "skiphog/cache",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/skiphog/cache",
+                "reference": "77c8a01e6edb86caae32450b69c3547b2da73096"
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Skiphog\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Skopin Alexey",
+                    "email": "skiphog@mail.ru"
+                }
+            ],
+            "description": "Very small cache component. This is a test package.",
+            "keywords": [
+                "Cache"
+            ],
+            "time": "2018-07-25T12:01:39+00:00"
+        },
+        {
+            "name": "skiphog/container",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/skiphog/container",
+                "reference": "9b24253318a00c7fee5c85737010c66d882b06bf"
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Skiphog\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Skopin Alexey",
+                    "email": "skiphog@mail.ru"
+                }
+            ],
+            "description": "Very small static registry container. This is a test package.",
+            "keywords": [
+                "Container"
+            ],
+            "time": "2018-05-17T14:27:26+00:00"
+        },
+        {
+            "name": "skiphog/http",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/skiphog/http",
+                "reference": "df8f211f9089d0c99fa98aa1b9f1dea79b678761"
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Skiphog\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Skopin Alexey",
+                    "email": "skiphog@mail.ru"
+                }
+            ],
+            "description": "Very small http foundation. This is a test package.",
+            "keywords": [
+                "Http"
+            ],
+            "time": "2018-07-02T13:14:14+00:00"
+        },
+        {
+            "name": "skiphog/router",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/skiphog/router",
+                "reference": "5cc2156735e2defb68d14e74b86ba131fe9ad01a"
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Skiphog\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Skopin Alexey",
+                    "email": "skiphog@mail.ru"
+                }
+            ],
+            "description": "Very small router example. This is a test package.",
+            "keywords": [
+                "Router"
+            ],
+            "time": "2018-07-25T11:52:09+00:00"
+        },
+        {
+            "name": "skiphog/view",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/skiphog/view",
+                "reference": "1a00b37dded91bb546284e2ae6f666aad58ee8f2"
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Skiphog\\": "src/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Skopin Alexey",
+                    "email": "skiphog@mail.ru"
+                }
+            ],
+            "description": "Very small view component. This is a test package.",
+            "keywords": [
+                "View"
+            ],
+            "time": "2018-07-25T11:52:37+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": true,
+    "prefer-lowest": false,
+    "platform": {
+        "php": "^7.2"
+    },
+    "platform-dev": []
+}
