@@ -6,9 +6,9 @@ import Icons from 'uikit/dist/js/uikit-icons';
 // loads the Icon plugin
 UIkit.use(Icons);
 
-UIkit.notification({
+/*UIkit.notification({
   message: 'Привет :)',
   status: 'danger',
   pos: 'bottom-center',
   timeout: 5000
-});
+});*/

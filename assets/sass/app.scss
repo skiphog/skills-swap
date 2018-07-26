@@ -1,8 +1,8 @@
 // 1. Your custom variables and variable overwrites.
 //$global-link-color: #da4c59;
-$global-primary-background : #005ca1 !default;
-$global-secondary-background : #24b662 !default;
-$global-danger-background : #c9302c !default;
+$global-primary-background: #1e87f0 !default;
+$global-secondary-background: #24b662 !default;
+$global-danger-background: #c9302c !default;
 
 // 2. Import default variables and available mixins.
 @import "~uikit/src/scss/variables-theme.scss";
@@ -17,4 +17,31 @@ $global-danger-background : #c9302c !default;
 body {
   min-height: 100%;
   overflow-y: scroll;
+}
+
+.ss-section-first {
+  background: url(/img/background.svg) 50% 10% no-repeat, linear-gradient(to left top, #28a5f5, #1e87f0) 0 0 no-repeat
+}
+
+.ss-section-second {
+  background: #3dc0f1;
+  color: #fff !important;
+}
+
+.ss-section-footer {
+  background: #222 !important;
+}
+
+.ss-preview-icon {
+  margin-bottom: -20px;
+}
+
+.ss-button-primary {
+  border-radius: 500px;
+  background: #fff !important;
+  color: #1e87f0 !important;
+
+  &:hover {
+    box-shadow: 0 10px 40px #1e87f0
+  }
 }
