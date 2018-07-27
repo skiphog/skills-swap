@@ -5,10 +5,13 @@
 ?>
 <?php $this->extend('layouts/app'); ?>
 
+<?php $this->start('title'); ?>skills-swap<?php $this->stop(); ?>
+<?php $this->start('description'); ?>skills-swap<?php $this->stop(); ?>
+
 <?php $this->start('content'); ?>
-<div class="uk-offcanvas-content">
-    <div class="uk-section-primary ss-section-first">
-        <div class="uk-navbar-container tm-navbar-container uk-navbar-transparent">
+<div class="uk-offcanvas-content ss-height-100">
+    <div class="uk-section-primary ss-height-100 ss-theme-book">
+        <div uk-sticky class="uk-navbar-container tm-navbar-container uk-navbar-transparent">
             <div class="uk-container uk-container-expand">
                 <nav class="uk-navbar">
                     <div class="uk-navbar-left">
@@ -18,7 +21,7 @@
                     </div>
                     <div class="uk-navbar-right">
                         <ul class="uk-navbar-nav uk-visible@m">
-                            <li><a href="#">Войти</a></li>
+                            <li><a>Войти</a></li>
                         </ul>
                         <a uk-navbar-toggle-icon uk-toggle href="#offcanvas"
                                 class="uk-navbar-toggle uk-hidden@m uk-navbar-toggle-icon uk-icon">
@@ -33,26 +36,35 @@
             </div>
         </div>
 
-        <!--<div class="uk-sticky-placeholder" style="height: 80px; margin: 0px;"></div>-->
-
-        <div class="uk-section uk-section-small uk-flex uk-flex-middle uk-text-center">
-            <div class="uk-width-1-1">
-                <div class="uk-container">
-                    <p>
-                        <img src="/img/baner.png" width="741" height="121" alt="Логотип">
-                    </p>
-                    <p class="uk-margin-large uk-text-lead">
-                        A mother fucker skills swap profession<br class="uk-visible@s">
-                        for fucking some fucking people.
-                    </p>
-
-                    <div class="uk-flex-inline uk-flex-center uk-margin-large-bottom">
-                        <a href="#" class="uk-button uk-button-primary ss-button-primary uk-button-large tm-button-large uk-visible@s">Get Started</a>
-                        <a href="#" class="uk-button uk-button-primary ss-button-primary uk-hidden@s">Get Started</a>
-                    </div>
+        <div class="ss-banner">
+            <img class="ss-tm-baner" src="/img/swap.png" width="749" height="125" alt="Логотип">
+            <div class="uk-container uk-text-center">
+                <div class="ss-button-book-group">
+                    <a class="uk-button ss-button-book uk-visible@s">Начать</a>
+                    <a class="uk-button ss-button-book uk-hidden@s">Начать</a>
                 </div>
             </div>
         </div>
+
+    </div>
+
+    <div class="uk-section uk-section-primary uk-section-small uk-flex uk-flex-middle uk-text-center ss-section-first">
+
+        <div class="uk-container">
+            <p>
+                <img src="/img/swap.png" width="741" height="121" alt="Логотип">
+            </p>
+            <p class="uk-margin-large uk-text-lead">
+                A mother fucker skills swap profession<br class="uk-visible@s">
+                for fucking some fucking people.
+            </p>
+
+            <div class="uk-flex-inline uk-flex-center uk-margin-large-bottom">
+                <a class="uk-button uk-button-primary ss-button-primary uk-button-large tm-button-large uk-visible@s">Get Started</a>
+                <a class="uk-button uk-button-primary ss-button-primary uk-hidden@s">Get Started</a>
+            </div>
+        </div>
+
     </div>
 
     <div class="uk-section uk-section-primary uk-text-center ss-section-second">
@@ -139,6 +151,6 @@
         </div>
     </div>
 
-    </div>
 </div>
+
 <?php $this->stop(); ?>
