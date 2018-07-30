@@ -9,6 +9,7 @@
 <?php $this->start('description'); ?>skills-swap<?php $this->stop(); ?>
 
 <?php $this->start('content'); ?>
+
 <div class="uk-offcanvas-content ss-height-100">
     <div class="uk-section-primary ss-height-100 ss-theme-book">
         <div uk-sticky class="uk-navbar-container tm-navbar-container uk-navbar-transparent">

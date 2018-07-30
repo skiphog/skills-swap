@@ -28,6 +28,14 @@ function config($key)
 }
 
 /**
+ * @return \App\Models\Users\AuthUser
+ */
+function auth()
+{
+    return app('auth');
+}
+
+/**
  * @return App\System\DataBase
  */
 function db()
