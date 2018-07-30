@@ -19,7 +19,7 @@ abstract class Validator
             try {
                 method_exists($this, $field) && $this->$field($data[$field] ?? null);
             } catch (\Exception $e) {
-                $multi->add($e);
+                $multi->add($field, $e);
             }
         }
 
