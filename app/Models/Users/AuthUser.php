@@ -4,6 +4,11 @@ namespace App\Models\Users;
 
 class AuthUser extends User
 {
+    /**
+     * @param $token
+     *
+     * @return mixed
+     */
     public static function findByToken($token)
     {
         $sql = 'select * from users where token = :token';

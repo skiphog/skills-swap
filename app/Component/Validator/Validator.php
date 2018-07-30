@@ -9,34 +9,29 @@ abstract class Validator
     /**
      * @param array $data
      *
-     * @throws ValidateException
+     * @throws MultiException
      */
     public function validate(array $data)
     {
-        if ($errors = $this->getErrors($data)) {
-            throw new ValidateException($errors);
+        $multi = new MultiException();
+
+        foreach (static::$fields as $field) {
+            try {
+                method_exists($this, $field) && $this->$field($data[$field] ?? null);
+            } catch (\Exception $e) {
+                $multi->add($e);
+            }
+        }
+
+        if ($multi->hasErrors()) {
+            throw $multi;
         }
     }
 
-    /**
-     * @param array $data
-     *
-     * @return array
-     */
-    protected function getErrors(array $data)
+    protected function trowIfEmpty($data, $field)
     {
-        $errors = [];
-        foreach (static::$fields as $field) {
-            if (!array_key_exists($field, $data)) {
-                $errors[] = $field;
-                continue;
-            }
-
-            if (!$this->$field($data[$field])) {
-                $errors[] = $field;
-            }
+        if (empty($data)) {
+            throw new \InvalidArgumentException("Поле {$field} обязателено к заполнению");
         }
-
-        return $errors;
     }
 }

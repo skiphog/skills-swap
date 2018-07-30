@@ -4,7 +4,7 @@ namespace App\Validate;
 
 use App\Component\Validator\Validator;
 
-class ValidateOrder extends Validator
+class OrderValidate extends Validator
 {
     protected static $fields = [
         'name',
