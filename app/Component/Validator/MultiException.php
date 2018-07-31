@@ -50,8 +50,7 @@ class MultiException extends \Exception implements \JsonSerializable, \IteratorA
      */
     public function toArray()
     {
-        return array_map(function ($value) {
-            /** @var self $value */
+        return array_map(function (\Exception $value) {
             return $value->getMessage();
         }, $this->data);
     }
