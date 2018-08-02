@@ -17,7 +17,8 @@ abstract class Validator
 
         foreach (static::$fields as $field) {
             try {
-                method_exists($this, $field) && $this->$field($data[$field] ?? null);
+                $method = camel($field);
+                method_exists($this, $method) && $this->$method($data[$field] ?? null);
             } catch (\Exception $e) {
                 $multi->add($field, $e);
             }
@@ -28,10 +29,11 @@ abstract class Validator
         }
     }
 
-    protected function trowIfEmpty($data, $field)
+    protected function trowIfEmpty($value, $field)
     {
-        if (empty($data)) {
+        if (empty($value)) {
             throw new \InvalidArgumentException("Поле {$field} обязателено к заполнению");
         }
     }
+
 }

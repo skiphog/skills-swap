@@ -2,8 +2,10 @@
 
 namespace App\Controllers\Auth;
 
+use App\Models\Users\User;
 use Wardex\Http\Request;
 use App\System\Controller;
+use App\Validate\RegistrationValidate;
 
 class RegistrationController extends Controller
 {
@@ -18,21 +20,31 @@ class RegistrationController extends Controller
     /**
      * Зарегистрировать пользователя
      *
-     * @param Request $request
+     * @param Request              $request
+     * @param RegistrationValidate $validator
+     *
+     * @return \Wardex\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, RegistrationValidate $validator)
     {
-        /**
-         * 1. Валидация реквеста
-         */
+        $data = $request->post();
+        $validator->validate($data);
+
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        $data['token'] = hash_hmac('sha512', implode('', $data), time());
+
+        $user = new User();
+        $user->fill($data)->save();
+
+
+        return json(['status' => $user->id]);
     }
 
     /**
      * Подтвердить email
      *
-     * @param Request $request
      */
-    public function confirm(Request $request)
+    public function confirm()
     {
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\System;
 
+use Skiphog\Container;
 use Wardex\Http\Request;
 use App\Exceptions\ForbiddenException;
+use App\Component\Validator\MultiException;
 
 /**
  * Class Controller
@@ -14,10 +16,10 @@ abstract class Controller
 {
     /**
      * @param string  $action
+     *
      * @param Request $request
      *
      * @return mixed
-     * @throws ForbiddenException
      */
     public function callAction($action, Request $request)
     {
@@ -31,7 +33,19 @@ abstract class Controller
 
         $this->before();
 
-        return $this->$action($request);
+        try {
+            $response = $this->action($action, $request);
+        } catch (MultiException $e) {
+            if ($request->isAjax()) {
+                return json(['errors' => $e], 422);
+            }
+
+            return back()
+                ->withInputs($request)
+                ->withSession('errors', $e->toArray());
+        }
+
+        return $response;
     }
 
     /**
@@ -46,5 +60,20 @@ abstract class Controller
 
     protected function before(): void
     {
+    }
+
+    protected function action($action, Request $request)
+    {
+        $method = new \ReflectionMethod($this, $action);
+
+        $args = array_map(function (\ReflectionParameter $param) use ($request) {
+            if (null === $arg = $param->getClass()) {
+                return $request->{$param->getName()};
+            }
+
+            return Container::get($arg->getName());
+        }, $method->getParameters());
+
+        return $method->invokeArgs($this, $args);
     }
 }

@@ -14,9 +14,14 @@ $ss-theme-background: #3bb6d5 !default;
 
 // 4. Import UIkit.
 @import "~uikit/src/scss/uikit-theme.scss";
+@import "modal";
 
 body {
   overflow-y: scroll;
+}
+
+.uk-button, .uk-input {
+  border-radius: 500px;
 }
 
 .ss-tm-baner {
@@ -79,4 +84,12 @@ body {
   &:hover {
     box-shadow: 0 10px 40px #1e87f0
   }
+}
+
+[uk-spinner] {
+  color: #0e6ecd;
+}
+
+.ss-hovered {
+  cursor: pointer;
 }

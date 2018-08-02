@@ -135,6 +135,38 @@ function e($string)
 }
 
 /**
+ * @todo Доделать
+ *
+ * @param $url
+ *
+ * @return string
+ */
+function url($url)
+{
+    return $url;
+}
+
+/**
+ * @param $string [FooBarBaz]
+ *
+ * @return string [fooBarBaz]
+ */
+function camel($string)
+{
+    return lcfirst(studly($string));
+}
+
+/**
+ * @param $string [foo_bar_baz]
+ *
+ * @return string [FooBarBaz]
+ */
+function studly($string)
+{
+    return implode('', array_map('ucfirst', explode('_', $string)));
+}
+
+/**
  * @param string $text
  * @param int    $sub
  * @param string $end

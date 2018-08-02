@@ -6,6 +6,15 @@ use App\System\Model;
 
 class User extends Model
 {
+    protected $fillable = [
+        'first_name',
+        'email',
+        'password',
+        'token'
+    ];
+
+    protected static $table = 'users';
+
     /**
      * @param $email
      *

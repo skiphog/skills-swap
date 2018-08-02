@@ -46,7 +46,7 @@ abstract class Model
             return $this->$method($value);
         }
 
-        return is_numeric($value) ? $this->{$name} = (int)$value : $this->{$name} = $value;
+        return $this->{$name} = $value;
     }
 
     /**
@@ -72,6 +72,89 @@ abstract class Model
     }
 
     /**
+     * Заполняет модель значениями
+     *
+     * @param array $data
+     *
+     * @return $this
+     */
+    public function fill(array $data)
+    {
+        foreach ($data as $key => $value) {
+            if (!\in_array($key, $this->fillable, true)) {
+                continue;
+            }
+
+            $this->{$key} = $value;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Сохраняет запись
+     *
+     * @return bool
+     */
+    public function save(): bool
+    {
+        if ($this->isNew()) {
+            return $this->insert();
+        }
+
+        return $this->update();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isNew(): bool
+    {
+        return empty($this->id);
+    }
+
+    /**
+     * Добавляет запись
+     *
+     * @return bool
+     */
+    protected function insert(): bool
+    {
+        $vars = get_object_vars($this);
+        unset($vars['fillable']);
+
+        $sql = 'insert into ' . static::$table . ' (' . implode(',', array_keys($vars)) . ') 
+            values 
+        (' . ':' . implode(',:', array_keys($vars)) . ')';
+
+        $db = db();
+        if (true === $result = $db->prepare($sql)->execute($vars)) {
+            $this->id = $db->lastInsertId();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Обновляет запись
+     *
+     * @return bool
+     */
+    protected function update(): bool
+    {
+        $vars = $attr = get_object_vars($this);
+        unset($vars['id'], $vars['fillable'], $attr['fillable']);
+
+        array_walk($vars, function (&$v, $k) {
+            $v = $k . '=:' . $k;
+        });
+
+        $sql = 'update ' . static::$table . ' set ' . implode(',', $vars) . ' where id=:id';
+
+        return db()->prepare($sql)->execute($attr);
+    }
+
+    /**
      * Генерирует метод
      *
      * @param string $particle
@@ -84,5 +167,10 @@ abstract class Model
         $method = array_map('ucfirst', explode('_', $data));
 
         return $particle . implode('', $method);
+    }
+
+    public function setId($value)
+    {
+        $this->id = (int)$value;
     }
 }

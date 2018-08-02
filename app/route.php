@@ -7,7 +7,9 @@ use Wardex\Router\Router;
  */
 
 $route->get('/', 'IndexController@index');
+$route->get('/fuck/{id:\d+}', 'IndexController@index');
 
 $route->group('/auth', function (Router $r) {
-    $r->get('/registration', 'Auth\RegistrationController@index');
+    $r->post('/registration', 'Auth\RegistrationController@store');
+    $r->post('/login', 'Auth\AuthController@login');
 });

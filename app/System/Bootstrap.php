@@ -2,6 +2,7 @@
 
 namespace App\System;
 
+use Wardex\Http\Request;
 use Wardex\Router\Router;
 
 /**
@@ -30,7 +31,7 @@ class Bootstrap
     }
 
     /**
-     * @param $controller
+     * @param string  $controller
      *
      * @return Controller
      */
@@ -42,7 +43,7 @@ class Bootstrap
             throw new \BadMethodCallException('Контроллера ' . $controller . ' не существует');
         }
 
-        return new $controller;
+        return new $controller();
     }
 
     protected function setRegistry(): void

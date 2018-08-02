@@ -15255,8 +15255,21 @@ iframe.uk-cover {
   }
 }
 
+.ss-model-label {
+  margin-left: 10px;
+}
+
+.uk-modal-dialog {
+  border-radius: 6px;
+}
+
 body {
   overflow-y: scroll;
+}
+
+.uk-button,
+.uk-input {
+  border-radius: 500px;
 }
 
 .ss-tm-baner {
@@ -15324,5 +15337,13 @@ body {
 .ss-button-book:hover {
   -webkit-box-shadow: 0 10px 40px #1e87f0;
           box-shadow: 0 10px 40px #1e87f0;
+}
+
+[uk-spinner] {
+  color: #0e6ecd;
+}
+
+.ss-hovered {
+  cursor: pointer;
 }
 
