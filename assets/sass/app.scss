@@ -15,10 +15,6 @@ $ss-theme-background: #3bb6d5 !default;
 // 4. Import UIkit.
 @import "~uikit/src/scss/uikit-theme.scss";
 
-html, body, .ss-height-100 {
-  height: 100%;
-}
-
 body {
   overflow-y: scroll;
 }
@@ -45,6 +41,7 @@ body {
 }
 
 .ss-theme-book {
+  height: 100vh;
   min-height: 680px;
 }
 

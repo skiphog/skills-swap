@@ -7,7 +7,10 @@ import Icons from 'uikit/dist/js/uikit-icons';
 // loads the Icon plugin
 UIkit.use(Icons);
 
+// global Uikit
 window.UIkit = UIkit;
+
+require('./modal');
 
 /*UIkit.notification({
   message: 'Привет :)',
