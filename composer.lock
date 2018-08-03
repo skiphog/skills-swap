@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7fc1312b6ce49386db35efcd57009076",
+    "content-hash": "2e28f6e5ce2150d7b71d68d0e9cd6b6a",
     "packages": [
         {
             "name": "skiphog/container",
@@ -43,11 +43,11 @@
         },
         {
             "name": "skiphog/wardex",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/skiphog/wardex",
-                "reference": "fad9eac998e874d1abd1638ff3bb3f0e18cc0971"
+                "reference": "9dc36b76989b445ec7b5f3a208333b3634392c1a"
             },
             "require": {
                 "php": "^7.1"
@@ -74,7 +74,7 @@
             "keywords": [
                 "Example"
             ],
-            "time": "2018-07-25T17:42:27+00:00"
+            "time": "2018-08-03T17:17:08+00:00"
         }
     ],
     "packages-dev": [],

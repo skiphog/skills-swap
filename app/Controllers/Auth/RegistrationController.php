@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Auth;
 
+use App\Exceptions\NotFoundException;
 use Wardex\Http\Request;
 use App\Models\Users\User;
 use App\System\Controller;
@@ -11,14 +12,6 @@ use App\Validate\RegistrationValidate;
 
 class RegistrationController extends Controller
 {
-    /**
-     * Показать форму регистрации
-     */
-    public function index()
-    {
-        return view('auth/registration');
-    }
-
     /**
      * Зарегистрировать пользователя
      *
@@ -42,6 +35,15 @@ class RegistrationController extends Controller
         Mailer::to($user->email)->send(new RegistrationMail($user));
 
         return json(['status' => 1]);
+    }
+
+    public function token($token)
+    {
+        if (!$user = User::findByTokenForConfirm($token)) {
+            throw new NotFoundException('Страница не найдена');
+        }
+
+        return view('auth/confirm', compact('user'));
     }
 
     /**

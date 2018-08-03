@@ -43,6 +43,21 @@ class User extends Model
         return (bool)$sth->fetchColumn();
     }
 
+    /**
+     * @param $token
+     *
+     * @return mixed
+     */
+    public static function findByTokenForConfirm($token)
+    {
+        $sql = 'select * from users where token = :token and verified = 0';
+
+        $sth = db()->prepare($sql);
+        $sth->execute(['token' => $token]);
+
+        return $sth->fetchObject(static::class);
+    }
+
     public function setVerified($value)
     {
         $this->verified = (bool)$value;
