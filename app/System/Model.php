@@ -2,6 +2,8 @@
 
 namespace App\System;
 
+use App\Component\SkillsDate;
+
 /**
  * Class Model
  *
@@ -172,5 +174,14 @@ abstract class Model
     public function setId($value)
     {
         $this->id = (int)$value;
+    }
+
+    public function setCreatedAt($value)
+    {
+        try {
+            $this->{'created_at'} = new SkillsDate($value);
+        } catch (\Exception $e) {
+            $this->{'created_at'} = (string)$value;
+        }
     }
 }

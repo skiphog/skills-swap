@@ -14,7 +14,7 @@ return [
     /**
      * Подключение к бд
      */
-    'db'     => [
+    'db' => [
         'host'     => '127.0.0.1',
         'dbname'   => 'skills',
         'username' => 'root',
@@ -30,8 +30,8 @@ return [
     /**
      * Кеш
      */
-    'cache'  => [
-        'driver' => \Skiphog\FileDriver::class,
+    'cache' => [
+        'driver' => \Wardex\Cache\FileDriver::class,
         'path'   => __DIR__ . '/cache'
     ],
 
@@ -41,4 +41,9 @@ return [
     'view' => [
         'path' => __DIR__ . '/template'
     ],
+
+    /**
+     * Основной email
+     */
+    'mail' => 'info@skills-swap.ru'
 ];

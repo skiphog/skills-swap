@@ -62,14 +62,6 @@
                         </div>
 
                         <div class="uk-margin">
-                            <label class="uk-form-label ss-model-label" for="password">Пароль</label>
-                            <div class="uk-inline uk-width-1-1">
-                                <span class="uk-form-icon" uk-icon="icon: lock"></span>
-                                <input id="password" class="uk-input" type="text" name="password" required>
-                            </div>
-                        </div>
-
-                        <div class="uk-margin">
                             <label class="ss-hovered">
                                 <input class="uk-checkbox" type="checkbox" name="confirm" checked required>
                                 Я согласен на <a>обработку моих персональных данных</a>

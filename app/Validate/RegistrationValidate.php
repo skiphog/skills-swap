@@ -10,7 +10,6 @@ class RegistrationValidate extends Validator
     protected static $fields = [
         'first_name',
         'email',
-        'password',
         'confirm'
     ];
 

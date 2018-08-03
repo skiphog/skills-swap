@@ -44,7 +44,7 @@
     },
     authRegistration (json, form) {
       if(json.status === 1) {
-        form.html('<span uk-icon="mail" class="uk-text-success"></span> На ваш адрес выслано письмо с подтверждением регистрации.');
+        form.html('<div><span uk-icon="mail" class="uk-text-success"></span> <span class="uk-text-middle uk-text-primary">На ваш адрес выслано письмо с подтверждением регистрации.</span></div>');
       }
     }
   };

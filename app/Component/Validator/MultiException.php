@@ -57,8 +57,6 @@ class MultiException extends \Exception implements \JsonSerializable, \IteratorA
 
 
     /**
-     * @todo проверить другие варианты
-     *
      * @return array
      */
     public function jsonSerialize()
