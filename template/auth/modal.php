@@ -11,7 +11,7 @@
 
             <ul class="uk-switcher uk-margin">
                 <li class="uk-active">
-                    <form class="auth-form" action="<?php echo url('/auth/login'); ?>" method="post">
+                    <form class="auth-form" action="<?php echo url('/auth/login'); ?>" method="post" data-callback="authLogin">
                         <div class="uk-margin">
                             <div class="uk-inline uk-width-1-1">
                                 <span class="uk-form-icon" uk-icon="icon: mail"></span>
@@ -44,7 +44,7 @@
                     </form>
                 </li>
                 <li>
-                    <form class="auth-form" action="<?php echo url('/auth/registration'); ?>" method="post">
+                    <form class="auth-form" action="<?php echo url('/auth/registration'); ?>" method="post" data-callback="authRegistration">
                         <div class="uk-margin">
                             <label class="uk-form-label ss-model-label" for="first_name">Имя</label>
                             <div class="uk-inline uk-width-1-1">

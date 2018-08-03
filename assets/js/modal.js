@@ -33,8 +33,19 @@
 
       },
       success: function (json) {
-
+        callBack[form.data('callback')](json, form);
       }
     });
   });
+
+  const callBack = {
+    authLogin (json, form) {
+
+    },
+    authRegistration (json, form) {
+      if(json.status === 1) {
+        form.html('<span uk-icon="mail" class="uk-text-success"></span> На ваш адрес выслано письмо с подтверждением регистрации.');
+      }
+    }
+  };
 })();

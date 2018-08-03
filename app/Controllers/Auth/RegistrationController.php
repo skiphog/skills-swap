@@ -31,13 +31,14 @@ class RegistrationController extends Controller
         $validator->validate($data);
 
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-        $data['token'] = hash_hmac('sha512', implode('', $data), time());
+        $data['token'] = hash_hmac('gost', implode('', $data), time());
 
         $user = new User();
-        $user->fill($data)->save();
+        $user->fill($data);//->save();
 
+        //@todo: Отправить почту c токеном
 
-        return json(['status' => $user->id]);
+        return json(['status' => 1]);
     }
 
     /**
