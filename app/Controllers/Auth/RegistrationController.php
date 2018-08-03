@@ -41,7 +41,7 @@ class RegistrationController extends Controller
 
         Mailer::to($user->email)->send(new RegistrationMail($user));
 
-        return json(['status' => $user]);
+        return json(['status' => 1]);
     }
 
     /**
