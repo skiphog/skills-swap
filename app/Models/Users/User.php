@@ -23,7 +23,8 @@ class User extends Model
         'first_name',
         'email',
         'password',
-        'token'
+        'token',
+        'verified'
     ];
 
     protected static $table = 'users';
@@ -44,9 +45,25 @@ class User extends Model
     }
 
     /**
+     * @param $name
+     * @param $value
+     *
+     * @return User
+     */
+    public static function findByField($name, $value)
+    {
+        $sql = "select * from users where {$name} = :value";
+
+        $sth = db()->prepare($sql);
+        $sth->execute(['value' => $value]);
+
+        return $sth->fetchObject(static::class);
+    }
+
+    /**
      * @param $token
      *
-     * @return mixed
+     * @return User
      */
     public static function findByTokenForConfirm($token)
     {

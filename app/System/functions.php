@@ -122,6 +122,19 @@ function view($name, array $params = [])
     return (new \Wardex\Http\Response())->setData(render($name, $params));
 }
 
+function old($name, $default = null)
+{
+    if (empty($_SESSION[$name])) {
+        return $default;
+    }
+
+    $data = $_SESSION[$name];
+    unset($_SESSION[$name]);
+
+    return $data;
+}
+
+
 /**
  * Экранирует теги
  *

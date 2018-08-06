@@ -15,6 +15,7 @@ $ss-theme-background: #3bb6d5 !default;
 // 4. Import UIkit.
 @import "~uikit/src/scss/uikit-theme.scss";
 @import "modal";
+@import "drop-profile";
 
 body {
   overflow-y: scroll;

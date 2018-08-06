@@ -9,7 +9,12 @@ use Wardex\Router\Router;
 $route->get('/', 'IndexController@index');
 
 $route->group('/auth', function (Router $r) {
-    $r->get('/token/{token}', 'Auth\RegistrationController@token');
-    $r->post('/registration', 'Auth\RegistrationController@store');
     $r->post('/login', 'Auth\AuthController@login');
+    $r->get('/logout', 'Auth\AuthController@logout');
+
+    $r->get('/token/{token}', 'Auth\RegistrationController@token');
+    $r->get('/repass', 'Auth\RegistrationController@repass');
+    $r->post('/registration', 'Auth\RegistrationController@store');
+    $r->post('/confirm', 'Auth\RegistrationController@confirm');
+    $r->post('/repass', 'Auth\RegistrationController@repass');
 });

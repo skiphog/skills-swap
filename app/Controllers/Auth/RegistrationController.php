@@ -2,12 +2,14 @@
 
 namespace App\Controllers\Auth;
 
-use App\Exceptions\NotFoundException;
+use App\Component\Auth;
 use Wardex\Http\Request;
 use App\Models\Users\User;
 use App\System\Controller;
 use App\Mail\RegistrationMail;
 use App\Component\Mailer\Mailer;
+use App\Validate\ConfirmValidate;
+use App\Exceptions\NotFoundException;
 use App\Validate\RegistrationValidate;
 
 class RegistrationController extends Controller
@@ -46,11 +48,43 @@ class RegistrationController extends Controller
         return view('auth/confirm', compact('user'));
     }
 
+    public function repass()
+    {
+
+    }
+
+    public function retoken()
+    {
+
+    }
+
     /**
      * Подтвердить email
      *
+     * @param Request         $request
+     * @param ConfirmValidate $validator
+     *
+     * @return \Wardex\Http\Response
+     * @throws \Exception
      */
-    public function confirm()
+    public function confirm(Request $request, ConfirmValidate $validator)
     {
+        $data = $request->post();
+        $validator->validate($data);
+
+        if (!($user = User::findByTokenForConfirm($data['token']))) {
+            return json(['status' => 1]);
+        }
+
+        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
+        $data['token'] = hash_hmac('gost', bin2hex(random_bytes(16)) . implode('', $data), time());
+        $data['verified'] = true;
+
+        $user->fill($data)->save();
+
+        Auth::attempt($user->id, $data);
+
+        return json(['status' => 1])
+            ->withSession('flash', 'Добро пожаловать');
     }
 }

@@ -7,7 +7,7 @@
     UIkit.modal('#auth').show();
   });
 
-  $('#auth').on('submit', '.auth-form', function (e) {
+  $('.auth').on('submit', '.auth-form', function (e) {
     e.preventDefault();
     if (send) {
       return;
@@ -40,11 +40,19 @@
 
   const callBack = {
     authLogin (json, form) {
-
+      if (json.status === 1) {
+        window.location.replace('/');
+      }
+    },
+    authConfirm (json, form) {
+      if (json.status === 1) {
+        window.location.replace('/');
+      }
     },
     authRegistration (json, form) {
-      if(json.status === 1) {
-        form.html('<div><span uk-icon="mail" class="uk-text-success"></span> <span class="uk-text-middle uk-text-primary">На ваш адрес выслано письмо с подтверждением регистрации.</span></div>');
+      if (json.status === 1) {
+        form.html(
+          '<div><span uk-icon="mail" class="uk-text-success"></span> <span class="uk-text-middle uk-text-primary">На ваш адрес выслано письмо с подтверждением регистрации.</span></div>');
       }
     }
   };

@@ -1,4 +1,4 @@
-<div id="auth" uk-modal>
+<div id="auth" class="auth" uk-modal>
     <div class="uk-modal-dialog">
         <button class="uk-modal-close-default" type="button" uk-close></button>
         <div class="uk-modal-body">

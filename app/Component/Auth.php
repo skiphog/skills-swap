@@ -37,13 +37,36 @@ class Auth
             return $this->user = $user;
         }
 
-        if (!empty($_COOKIE['token']) && $user = AuthUser::findByToken($_COOKIE['token'])) {
+        if (!empty($_COOKIE['token']) && $user = AuthUser::findByField('token', $_COOKIE['token'])) {
             $_SESSION[$id] = $user->id;
 
             return $this->user = $user;
         }
 
         return $this->user = new AuthUser();
+    }
+
+
+    public static function attempt($id, array $data)
+    {
+        $_SESSION[self::identificator()] = $id;
+
+        if (!empty($data['remember'])) {
+            setcookie('token', $data['token'], 0x7FFFFFFF, '/', '', false, true);
+        }
+    }
+
+    public static function logout()
+    {
+        unset($_SESSION[self::identificator()]);
+
+        //session_destroy();
+
+        $time = time() - 3600;
+
+        foreach (['token'] as $value) {
+            setcookie($value, '', $time, '/', '');
+        }
     }
 
     /**

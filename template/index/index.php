@@ -107,3 +107,16 @@
     </div>
 
 <?php $this->stop(); ?>
+
+<?php $this->start('script'); ?>
+<?php if (null !== $flash = old('flash')) : ?>
+    <script>
+      UIkit.notification({
+        message: '<?php echo e($flash); ?>',
+        status: 'danger',
+        pos: 'top-center',
+        timeout: 5000
+      });
+    </script>
+<?php endif; ?>
+<?php $this->stop(); ?>

@@ -1,0 +1,36 @@
+.ss-drop-profile {
+  border-radius: 6px;
+  background: #2497f3;
+  width: 150px;
+  padding: 10px;
+
+  li:not(:last-child) {
+    border-bottom: 1px dashed #3bb6d5;
+  }
+
+  a {
+    /* text-transform: uppercase;*/
+    padding: 10px 0 !important;
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 100px;
+    width: 10px;
+    height: 10px;
+    border-width: 0 0 1px 1px;
+    border-style: solid;
+    border-color: #2497f3;
+    transform-origin: center;
+    transform: translateY(-50%) rotate(135deg);
+    background: #2497f3;
+    margin-top: 1px;
+
+  }
+}
+
+.ss-profile-name {
+  padding-left: 10px;
+  color: #fff;
+}

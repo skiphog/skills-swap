@@ -15,6 +15,8 @@ class RegistrationValidate extends Validator
 
     public function firstName($value)
     {
+        $this->trowIfEmpty($value, 'Имя');
+
         if (mb_strlen($value) > 100) {
             throw new \InvalidArgumentException('Слишком длинное имя');
         }

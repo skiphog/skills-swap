@@ -15263,6 +15263,45 @@ iframe.uk-cover {
   border-radius: 6px;
 }
 
+.ss-drop-profile {
+  border-radius: 6px;
+  background: #2497f3;
+  width: 150px;
+  padding: 10px;
+}
+
+.ss-drop-profile li:not(:last-child) {
+  border-bottom: 1px dashed #3bb6d5;
+}
+
+.ss-drop-profile a {
+  /* text-transform: uppercase;*/
+  padding: 10px 0 !important;
+}
+
+.ss-drop-profile::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 100px;
+  width: 10px;
+  height: 10px;
+  border-width: 0 0 1px 1px;
+  border-style: solid;
+  border-color: #2497f3;
+  -webkit-transform-origin: center;
+          transform-origin: center;
+  -webkit-transform: translateY(-50%) rotate(135deg);
+          transform: translateY(-50%) rotate(135deg);
+  background: #2497f3;
+  margin-top: 1px;
+}
+
+.ss-profile-name {
+  padding-left: 10px;
+  color: #fff;
+}
+
 body {
   overflow-y: scroll;
 }

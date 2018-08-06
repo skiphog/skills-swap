@@ -18,12 +18,12 @@
             <p>Придумайте пароль для входа</p>
 
             <form class="auth-form" action="<?php echo url('/auth/confirm'); ?>" method="post"
-                    data-callback="authConfirm">
+                data-callback="authConfirm">
                 <div class="uk-margin">
                     <div class="uk-inline uk-width-1-2@m">
                         <span class="uk-form-icon" uk-icon="icon: lock"></span>
                         <input class="uk-input"
-                                type="text" name="password" placeholder="Пароль" autocomplete="off" required>
+                            type="text" name="password" placeholder="Пароль" autocomplete="off" required>
                     </div>
                 </div>
 
