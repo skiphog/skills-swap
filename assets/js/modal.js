@@ -49,6 +49,12 @@
         window.location.replace('/');
       }
     },
+    authRepass (json, form) {
+      if (json.status === 1) {
+        form.html(
+          '<div><span uk-icon="mail" class="uk-text-success"></span> <span class="uk-text-middle uk-text-primary">На ваш адрес выслано письмо для восстановления доступа </span></div>');
+      }
+    },
     authRegistration (json, form) {
       if (json.status === 1) {
         form.html(

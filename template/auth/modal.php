@@ -39,7 +39,7 @@
                         </div>
                         <hr class="uk-divider-icon">
                         <div class="uk-text-center">
-                            <a class="uk-text-muted uk-text-bold" href="#">Забыли пароль?</a>
+                            <a class="uk-text-muted uk-text-bold" href="<?php echo url('/auth/repass'); ?>">Забыли пароль?</a>
                         </div>
                     </form>
                 </li>

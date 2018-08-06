@@ -3,10 +3,12 @@
 namespace App\Controllers\Auth;
 
 use App\Component\Auth;
+use App\Mail\RepassMail;
 use Wardex\Http\Request;
 use App\Models\Users\User;
 use App\System\Controller;
 use App\Mail\RegistrationMail;
+use App\Validate\RepassValidate;
 use App\Component\Mailer\Mailer;
 use App\Validate\ConfirmValidate;
 use App\Exceptions\NotFoundException;
@@ -29,7 +31,7 @@ class RegistrationController extends Controller
         $validator->validate($data);
 
         $data['password'] = password_hash(bin2hex(random_bytes(10)), PASSWORD_DEFAULT);
-        $data['token'] = hash_hmac('gost', implode('', $data), time());
+        $data['token'] = hash_hmac('gost', bin2hex(random_bytes(16)) . implode('', $data), time());
 
         $user = new User();
         $user->fill($data)->save();
@@ -41,6 +43,10 @@ class RegistrationController extends Controller
 
     public function token($token)
     {
+        if (auth()->isUser()) {
+            return redirect('/');
+        }
+
         if (!$user = User::findByTokenForConfirm($token)) {
             throw new NotFoundException('Страница не найдена');
         }
@@ -48,14 +54,43 @@ class RegistrationController extends Controller
         return view('auth/confirm', compact('user'));
     }
 
+    /**
+     * @return \Wardex\Http\Response
+     */
     public function repass()
     {
+        if (auth()->isUser()) {
+            return redirect('/');
+        }
 
+        return view('auth/repass');
     }
 
-    public function retoken()
+    /**
+     * @param Request        $request
+     * @param RepassValidate $validator
+     *
+     * @return \Wardex\Http\Response
+     * @throws \Exception
+     */
+    public function retoken(Request $request, RepassValidate $validator)
     {
+        $data = $request->post();
+        $validator->validate($data);
 
+        if (!$user = User::findByField('email', $data['email'])) {
+            return json(['errors' => ['email' => 'Такого пользователя нет в базе']], 422);
+        }
+
+        $data['password'] = password_hash(bin2hex(random_bytes(10)), PASSWORD_DEFAULT);
+        $data['token'] = hash_hmac('gost', bin2hex(random_bytes(16)) . implode('', $data), time());
+        $data['verified'] = 0;
+
+        $user->fill($data)->save();
+
+        Mailer::to($user->email)->send(new RepassMail($user));
+
+        return json(['status' => 1]);
     }
 
     /**

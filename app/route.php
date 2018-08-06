@@ -16,5 +16,5 @@ $route->group('/auth', function (Router $r) {
     $r->get('/repass', 'Auth\RegistrationController@repass');
     $r->post('/registration', 'Auth\RegistrationController@store');
     $r->post('/confirm', 'Auth\RegistrationController@confirm');
-    $r->post('/repass', 'Auth\RegistrationController@repass');
+    $r->post('/repass', 'Auth\RegistrationController@retoken');
 });
