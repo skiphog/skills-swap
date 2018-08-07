@@ -2,6 +2,8 @@
 
 namespace System;
 
+use System\Exceptions\HttpException;
+
 /**
  * Class Router
  *
@@ -12,7 +14,7 @@ class Router
     /**
      * @var array $routes
      */
-    public $routes = [
+    protected $routes = [
         'GET'  => [],
         'POST' => []
     ];
@@ -20,17 +22,17 @@ class Router
     /**
      * @var string
      */
-    public $prefix;
+    protected $prefix;
 
     /**
      * @param string $path
      *
      * @return Router
      */
-    public static function load(string $path): Router
+    public static function load(string $path)
     {
         if (!is_readable($path)) {
-            throw new \InvalidArgumentException('Файл с маршрутами не найден');
+            throw new \RuntimeException("Файл с маршрутами [ {$path} ] не найден");
         }
 
         $route = new static();
@@ -44,7 +46,7 @@ class Router
      * @param string $pattern
      * @param string $handler
      */
-    public function get($pattern, $handler): void
+    public function get($pattern, $handler)
     {
         $this->setRoute('GET', $pattern, $handler);
     }
@@ -53,7 +55,7 @@ class Router
      * @param string $pattern
      * @param string $handler
      */
-    public function post($pattern, $handler): void
+    public function post($pattern, $handler)
     {
         $this->setRoute('POST', $pattern, $handler);
     }
@@ -62,20 +64,19 @@ class Router
      * @param string   $prefix
      * @param callable $callback
      */
-    public function group($prefix, callable $callback): void
+    public function group($prefix, callable $callback)
     {
-        $this->prefix = $prefix;
+        $this->prefix = trim($prefix, '/');
         $callback($this);
         $this->prefix = null;
     }
 
     /**
-     * @todo:: Кэш роутов
      *
      * @return array
      * @throws \InvalidArgumentException
      */
-    public function match(): array
+    public function match()
     {
         $uri = $this->getUri();
 
@@ -85,7 +86,7 @@ class Router
             }
         }
 
-        throw new \InvalidArgumentException("Роут {$_SERVER['REQUEST_METHOD']} [ {$uri}] не зарегистрирован");
+        throw new HttpException("Роут {$_SERVER['REQUEST_METHOD']} [ {$uri} ] не зарегистрирован");
     }
 
     /**
@@ -93,13 +94,16 @@ class Router
      * @param string $pattern
      * @param string $handler
      */
-    protected function setRoute($method, $pattern, $handler): void
+    protected function setRoute($method, $pattern, $handler)
     {
-        $pattern = trim(trim($this->prefix, '/') . '/' . trim($pattern, '/'), '/');
+        $pattern = trim($this->prefix . '/' . ltrim($pattern, '/'), '/');
 
         $this->routes[$method][$pattern] = $handler;
     }
 
+    /**
+     * @return string
+     */
     protected function getUri()
     {
         $uri = ltrim($_SERVER['REQUEST_URI'], '/');
@@ -112,7 +116,7 @@ class Router
      *
      * @return string
      */
-    protected function getPattern($pattern): string
+    protected function getPattern($pattern)
     {
         return preg_replace_callback('#{([^\}:]+):?([^\}]*?)\}#', function ($matches) {
             return '(?P<' . $matches[1] . '>' . ($matches[2] ?: '.+') . ')';

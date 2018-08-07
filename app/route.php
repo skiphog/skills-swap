@@ -8,6 +8,11 @@ use System\Router;
 
 $route->get('/', 'IndexController@index');
 
+
+$route->get('/test/{id:\d+}/{token}', 'IndexController@index');
+
+
+
 $route->group('/auth', function (Router $r) {
     $r->post('/login', 'Auth\AuthController@login');
     $r->get('/logout', 'Auth\AuthController@logout');

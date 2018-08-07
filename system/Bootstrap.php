@@ -13,6 +13,7 @@ class Bootstrap
     {
         try {
             [$controller, $action, $attributes] = Router::load(\dirname(__DIR__) . '/app/route.php')->match();
+
             $request = request()->setAttributes($attributes);
             $controller = $this->getController($controller);
 
@@ -23,7 +24,7 @@ class Bootstrap
             echo $response;
         } catch (\Exception $e) {
             http_response_code(404);
-            echo $e->getMessage();
+            var_dump($e->getMessage(), $e->getFile(), $e->getLine());
         }
     }
 

@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Component\FormRequest;
-use App\System\Controller;
+use System\Http\FormRequest;
+use System\Controller;
 
 class IndexController extends Controller
 {
