@@ -78,7 +78,7 @@ class Router
      */
     public function match()
     {
-        $uri = $this->getUri();
+        $uri = $this->uri();
 
         foreach ((array)$this->routes[$_SERVER['REQUEST_METHOD']] as $pattern => $handler) {
             if (preg_match('#^' . $this->getPattern($pattern) . '$#', $uri, $matches)) {
@@ -87,6 +87,20 @@ class Router
         }
 
         throw new HttpException("Роут {$_SERVER['REQUEST_METHOD']} [ {$uri} ] не зарегистрирован");
+    }
+
+    /**
+     * @param string $method
+     *
+     * @return array
+     */
+    public function getRoutes($method = null)
+    {
+        if (null === $method) {
+            return $this->routes;
+        }
+
+        return $this->routes[strtoupper($method)] ?? null;
     }
 
     /**
@@ -104,7 +118,7 @@ class Router
     /**
      * @return string
      */
-    protected function getUri()
+    protected function uri()
     {
         $uri = ltrim($_SERVER['REQUEST_URI'], '/');
 

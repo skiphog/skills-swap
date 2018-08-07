@@ -13,8 +13,9 @@ class Bootstrap
     {
         try {
             [$controller, $action, $attributes] = Router::load(\dirname(__DIR__) . '/app/route.php')->match();
-
             $request = request()->setAttributes($attributes);
+
+
             $controller = $this->getController($controller);
 
             $this->setRegistry();
@@ -29,7 +30,7 @@ class Bootstrap
     }
 
     /**
-     * @param string  $controller
+     * @param string $controller
      *
      * @return Controller
      */

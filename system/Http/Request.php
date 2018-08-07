@@ -5,54 +5,36 @@ namespace System\Http;
 /**
  * Class Request
  *
- * @property integer $id
- *
- * @package Wardex\Http
+ * @package System\Http
  */
-class Request
+class Request implements \IteratorAggregate
 {
     /**
-     * @var array $get
+     * @var array
      */
     protected $get;
 
     /**
-     * @var array $post
+     * @var array
      */
     protected $post;
 
     /**
-     * @var array $files
+     * @var array
      */
     protected $files;
+
+    /**
+     * @var array
+     */
+    protected $cookie;
 
     public function __construct()
     {
         $this->get = $_GET;
         $this->post = $_POST;
         $this->files = $_FILES;
-    }
-
-    /**
-     * @param mixed $params
-     * @param mixed $options
-     *
-     * @return mixed
-     */
-    public function get($params = null, $options = null)
-    {
-        return $this->getRequest($this->get, $params, $options);
-    }
-
-    /**
-     * @param mixed $params
-     * @param mixed $options
-     *
-     * @return mixed
-     */
-    public function post($params = null, $options = null)
-    {
-        return $this->getRequest($this->post, $params, $options);
+        $this->cookie = $_COOKIE;
     }
 
     /**
@@ -60,9 +42,9 @@ class Request
      *
      * @return mixed
      */
-    public function getInteger($params = null)
+    public function get($params = null)
     {
-        return $this->get($params, 'sanitizeInt');
+        return $this->getRequest('get', $params);
     }
 
     /**
@@ -70,9 +52,9 @@ class Request
      *
      * @return mixed
      */
-    public function postInteger($params = null)
+    public function post($params = null)
     {
-        return $this->post($params, 'sanitizeInt');
+        return $this->getRequest('post', $params);
     }
 
     /**
@@ -80,81 +62,53 @@ class Request
      *
      * @return mixed
      */
-    public function getString($params = null)
+    public function cookie($params = null)
     {
-        return $this->get($params, 'sanitizeString');
+        return $this->getRequest('cookie', $params);
     }
 
     /**
-     * @param mixed $params
-     *
-     * @return mixed
+     * @return array
      */
-    public function postString($params = null)
+    public function all()
     {
-        return $this->post($params, 'sanitizeString');
+        return array_merge($this->get(), $this->post());
     }
 
     /**
-     * @param mixed $params
-     * @param mixed $options
+     * @param $args
+     *
+     * @return string|array|null
+     */
+    public function input($args)
+    {
+        $all = $this->all();
+
+        return $this->getAll($all, $args);
+    }
+
+    /**
+     * @param array|string $args
      *
      * @return array
      */
-    public function getValues($params = null, $options = null): array
+    public function only($args)
     {
-        return (null !== $result = $this->get($params, $options)) ? array_values((array)$result) : [null];
+        return array_intersect_key($this->all(), array_flip((array)$args));
     }
 
     /**
-     * @param mixed $params
-     * @param mixed $options
+     * @param array|string $args
      *
      * @return array
      */
-    public function postValues($params = null, $options = null): array
+    public function except($args)
     {
-        return (null !== $result = $this->post($params, $options)) ? array_values((array)$result) : [null];
-    }
+        $args = (array)$args;
 
-    /**
-     * @param mixed $params
-     *
-     * @return array
-     */
-    public function getValuesInteger($params = null): array
-    {
-        return $this->getValues($params, 'sanitizeInt');
-    }
-
-    /**
-     * @param mixed $params
-     *
-     * @return array
-     */
-    public function getValuesString($params = null): array
-    {
-        return $this->getValues($params, 'sanitizeString');
-    }
-
-    /**
-     * @param mixed $params
-     *
-     * @return array
-     */
-    public function postValuesInteger($params = null): array
-    {
-        return $this->postValues($params, 'sanitizeInt');
-    }
-
-    /**
-     * @param mixed $params
-     *
-     * @return array
-     */
-    public function postValuesString($params = null): array
-    {
-        return $this->postValues($params, 'sanitizeString');
+        return array_filter($this->all(), function ($key) use ($args) {
+            return !\in_array($key, $args, true);
+        }, ARRAY_FILTER_USE_KEY);
     }
 
     /**
@@ -162,7 +116,7 @@ class Request
      *
      * @return bool
      */
-    public function hasFile(string $filename): bool
+    public function hasFile($filename)
     {
         return !empty($this->files[$filename]) && UPLOAD_ERR_NO_FILE !== $this->files[$filename]['error'];
     }
@@ -172,7 +126,7 @@ class Request
      *
      * @return array|null
      */
-    public function file(string $filename): ?array
+    public function file($filename)
     {
         return $this->files[$filename] ?? null;
     }
@@ -182,7 +136,7 @@ class Request
      *
      * @return Request
      */
-    public function setAttributes(array $params): Request
+    public function setAttributes(array $params)
     {
         foreach ($params as $key => $value) {
             \is_string($key) && $this->get[$key] = $value;
@@ -192,31 +146,19 @@ class Request
     }
 
     /**
-     * @param array $params
-     *
-     * @return Request
+     * @return string
      */
-    public function setPostAttribute(array $params): Request
+    public function uri()
     {
-        foreach ($params as $key => $value) {
-            $this->post[$key] = $value;
-        }
+        $uri = ltrim($_SERVER['REQUEST_URI'], '/');
 
-        return $this;
+        return (false !== $pos = strpos($uri, '?')) ? substr($uri, 0, $pos) : $uri;
     }
 
     /**
      * @return string
      */
-    public function uri(): string
-    {
-        return ltrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
-    }
-
-    /**
-     * @return string
-     */
-    public function type(): string
+    public function type()
     {
         return $_SERVER['REQUEST_METHOD'];
     }
@@ -224,7 +166,7 @@ class Request
     /**
      * @return bool
      */
-    public function isAjax(): bool
+    public function ajax()
     {
         return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
     }
@@ -232,7 +174,7 @@ class Request
     /**
      * @return mixed [ip address or false]
      */
-    public function getClientIp()
+    public function clientIp()
     {
         return filter_var(
             $_SERVER['REMOTE_ADDR'],
@@ -244,104 +186,54 @@ class Request
     /**
      * @return int
      */
-    public function getClientIp2long(): int
+    public function clientIp2long(): int
     {
-        return (int)sprintf('%u', ip2long($this->getClientIp()));
+        return (int)sprintf('%u', ip2long($this->clientIp()));
     }
 
     /**
-     * @param array $data
-     * @param mixed $params
-     * @param mixed $options
+     * @param $param
+     * @param $args
      *
-     * @return mixed
+     * @return array|string|null
      */
-    protected function getRequest(array &$data, $params, $options)
+    protected function getRequest($param, $args)
     {
-        $result = $this->getAllRequest($data, $params);
+        $data = array_map('trim', $this->{$param});
 
-        if (null !== $options) {
-            $result = $this->$options($result);
+        return $this->getAll($data, $args);
+    }
+
+    /**
+     * @param $data
+     * @param $args
+     *
+     * @return array|string|null
+     */
+    protected function getAll(&$data, $args)
+    {
+        if (null === $args) {
+            return $data;
+        }
+
+        if (!\is_array($args)) {
+            return $data[$args] ?? null;
+        }
+
+        $result = [];
+
+        foreach ((array)$args as $arg) {
+            isset($data[$arg]) && $result[$arg] = $data[$arg];
         }
 
         return $result;
     }
 
     /**
-     * @param array $data
-     * @param mixed $params
-     *
-     * @return mixed
+     * @return \ArrayIterator|\Traversable
      */
-    protected function getAllRequest(array &$data, $params)
+    public function getIterator()
     {
-        if (null === $params) {
-            return $data;
-        }
-
-        $result = [];
-
-        foreach ((array)$params as $param) {
-            $result[$param] = $data[$param] ?? null;
-        }
-
-        return \count($result) === 1 ? array_shift($result) : $result;
-    }
-
-    /**
-     * @param mixed $data
-     *
-     * @return mixed
-     */
-    protected function sanitizeInt($data)
-    {
-        return $this->sanitize($data, function ($value) {
-            return abs((int)$value);
-        });
-    }
-
-    /**
-     * @param mixed $data
-     *
-     * @return mixed
-     */
-    protected function sanitizeString($data)
-    {
-        return $this->sanitize($data, function ($value) {
-            return trim(strip_tags($value));
-        });
-    }
-
-
-    /**
-     * @param mixed    $data
-     * @param callable $callback
-     *
-     * @return mixed
-     */
-    protected function sanitize($data, callable $callback)
-    {
-        if (\is_array($data)) {
-            return array_map(function ($value) use ($callback) {
-                return $this->sanitize($value, $callback);
-            }, $data);
-        }
-
-        return $callback($data);
-    }
-
-    public function __get($name)
-    {
-        return $this->get($name) ?: $this->post($name);
-    }
-
-    public function __set($name, $value)
-    {
-        // TODO: Implement __set() method.
-    }
-
-    public function __isset($name)
-    {
-        // TODO: Implement __isset() method.
+        return new \ArrayIterator($this->all());
     }
 }
