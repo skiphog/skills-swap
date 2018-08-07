@@ -1,11 +1,10 @@
 <?php
 
-namespace App\System;
+namespace System;
 
-use Skiphog\Container;
-use Wardex\Http\Request;
-use App\Exceptions\ForbiddenException;
-use App\Component\Validator\MultiException;
+use System\Http\Request;
+use System\Exceptions\MultiException;
+use System\Exceptions\ForbiddenException;
 
 /**
  * Class Controller

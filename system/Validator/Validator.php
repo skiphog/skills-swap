@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Component\Validator;
+namespace System\Validator;
 
-abstract class Validator
+use System\Exceptions\MultiException;
+
+class Validator
 {
     protected static $fields = [];
 
@@ -29,11 +31,10 @@ abstract class Validator
         }
     }
 
-    protected function trowIfEmpty($value, $field)
+    public function trowIfEmpty($value, $field)
     {
         if (empty($value)) {
             throw new \InvalidArgumentException("Поле {$field} обязателено к заполнению");
         }
     }
-
 }

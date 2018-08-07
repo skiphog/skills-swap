@@ -4,28 +4,28 @@ namespace App\Controllers\Auth;
 
 use App\Component\Auth;
 use App\Mail\RepassMail;
-use Wardex\Http\Request;
+use System\Http\Request;
 use App\Models\Users\User;
-use App\System\Controller;
+use System\Controller;
 use App\Mail\RegistrationMail;
-use App\Validate\RepassValidate;
-use App\Component\Mailer\Mailer;
-use App\Validate\ConfirmValidate;
-use App\Exceptions\NotFoundException;
-use App\Validate\RegistrationValidate;
+use App\Requests\RepassRequest;
+use System\Mailer\Mailer;
+use App\Requests\ConfirmRequest;
+use System\Exceptions\NotFoundException;
+use App\Requests\RegistrationRequest;
 
 class RegistrationController extends Controller
 {
     /**
      * Зарегистрировать пользователя
      *
-     * @param Request              $request
-     * @param RegistrationValidate $validator
+     * @param Request             $request
+     * @param RegistrationRequest $validator
      *
-     * @return \Wardex\Http\Response
+     * @return \System\Http\Response
      * @throws \Exception
      */
-    public function store(Request $request, RegistrationValidate $validator)
+    public function store(Request $request, RegistrationRequest $validator)
     {
         $data = $request->post();
         $validator->validate($data);
@@ -55,7 +55,7 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @return \Wardex\Http\Response
+     * @return \System\Http\Response
      */
     public function repass()
     {
@@ -67,13 +67,13 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @param Request        $request
-     * @param RepassValidate $validator
+     * @param Request       $request
+     * @param RepassRequest $validator
      *
-     * @return \Wardex\Http\Response
+     * @return \System\Http\Response
      * @throws \Exception
      */
-    public function retoken(Request $request, RepassValidate $validator)
+    public function retoken(Request $request, RepassRequest $validator)
     {
         $data = $request->post();
         $validator->validate($data);
@@ -96,13 +96,13 @@ class RegistrationController extends Controller
     /**
      * Подтвердить email
      *
-     * @param Request         $request
-     * @param ConfirmValidate $validator
+     * @param Request        $request
+     * @param ConfirmRequest $validator
      *
-     * @return \Wardex\Http\Response
+     * @return \System\Http\Response
      * @throws \Exception
      */
-    public function confirm(Request $request, ConfirmValidate $validator)
+    public function confirm(Request $request, ConfirmRequest $validator)
     {
         $data = $request->post();
         $validator->validate($data);

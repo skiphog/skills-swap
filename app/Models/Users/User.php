@@ -2,7 +2,7 @@
 
 namespace App\Models\Users;
 
-use App\System\Model;
+use System\Model;
 
 /**
  * Class User
@@ -13,7 +13,7 @@ use App\System\Model;
  * @property string                    $first_name
  * @property string                    $last_name
  * @property bool                      $verified
- * @property \App\Component\SkillsDate $created_at
+ * @property \System\SkillsDate $created_at
  *
  * @package App\Models\Users
  */

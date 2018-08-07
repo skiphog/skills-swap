@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Validate;
+namespace App\Requests;
 
-use App\Component\Validator\Validator;
+use System\Validator\Validator;
 
-class RepassValidate extends Validator
+class RepassRequest extends Validator
 {
     protected static $fields = [
         'email',

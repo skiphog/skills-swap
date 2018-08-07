@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Validate;
+namespace App\Requests;
 
-use App\Component\Validator\Validator;
+use System\Validator\Validator;
 
-class ConfirmValidate extends Validator
+class ConfirmRequest extends Validator
 {
     protected static $fields = [
         'password',

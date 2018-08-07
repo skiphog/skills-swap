@@ -1,6 +1,6 @@
 <?php
 
-use Wardex\Router\Router;
+use System\Router;
 
 /**
  * @var Router $route

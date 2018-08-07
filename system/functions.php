@@ -10,7 +10,7 @@
 function app($name)
 {
     try {
-        return Skiphog\Container::get($name);
+        return \System\Container::get($name);
     } catch (Exception $e) {
         var_dump($e);
         die;
@@ -24,7 +24,7 @@ function app($name)
  */
 function config($key)
 {
-    return app(App\System\Config::class)->get($key);
+    return app(\System\Config::class)->get($key);
 }
 
 /**
@@ -36,15 +36,15 @@ function auth()
 }
 
 /**
- * @return App\System\DataBase
+ * @return \System\DataBase
  */
 function db()
 {
-    return app(App\System\DataBase::class);
+    return app(\System\DataBase::class);
 }
 
 /**
- * @return \Wardex\Cache\Cache
+ * @return \System\Cache\Cache
  */
 function cache()
 {
@@ -52,41 +52,41 @@ function cache()
 }
 
 /**
- * @return \Wardex\Http\Request
+ * @return \System\Http\Request
  */
 function request()
 {
-    return app(\Wardex\Http\Request::class);
+    return app(\System\Http\Request::class);
 }
 
 /**
  * @param string $url
  * @param int    $code
  *
- * @return \Wardex\Http\Response
+ * @return \System\Http\Response
  */
 function redirect($url, $code = 302)
 {
-    return (new \Wardex\Http\Response())->redirect($url, $code);
+    return (new \System\Http\Response())->redirect($url, $code);
 }
 
 /**
- * @return \Wardex\Http\Response
+ * @return \System\Http\Response
  */
 function back()
 {
-    return (new \Wardex\Http\Response())->back();
+    return (new \System\Http\Response())->back();
 }
 
 /**
  * @param mixed $data
  * @param int   $code
  *
- * @return \Wardex\Http\Response
+ * @return \System\Http\Response
  */
 function json($data, $code = 200)
 {
-    return (new \Wardex\Http\Response())->json($data, $code);
+    return (new \System\Http\Response())->json($data, $code);
 }
 
 /**
@@ -95,7 +95,7 @@ function json($data, $code = 200)
  */
 function abort($code = 404, $data = null)
 {
-    (new \Wardex\Http\Response())->abort($code, $data);
+    (new \System\Http\Response())->abort($code, $data);
 }
 
 /** @noinspection PhpDocMissingThrowsInspection */
@@ -108,18 +108,18 @@ function abort($code = 404, $data = null)
 function render($name, array $params = [])
 {
     /** @noinspection PhpUnhandledExceptionInspection */
-    return (new \Wardex\View\View(config('view')['path']))->render($name, $params);
+    return (new \System\View(config('view')['path']))->render($name, $params);
 }
 
 /**
  * @param string $name
  * @param array  $params
  *
- * @return \Wardex\Http\Response
+ * @return \System\Http\Response
  */
 function view($name, array $params = [])
 {
-    return (new \Wardex\Http\Response())->setData(render($name, $params));
+    return (new \System\Http\Response())->setData(render($name, $params));
 }
 
 function old($name, $default = null)
@@ -251,5 +251,7 @@ function plural($number, $words)
         return '';
     }
 
-    return $tmp[(($number % 10 === 1) && ($number % 100 !== 11)) ? 0 : ((($number % 10 >= 2) && ($number % 10 <= 4) && (($number % 100 < 10) || ($number % 100 >= 20))) ? 1 : 2)];
+    /** @noinspection NestedTernaryOperatorInspection */
+    return $tmp[(($number % 10 === 1) && ($number % 100 !== 11)) ? 0 :
+        ((($number % 10 >= 2) && ($number % 10 <= 4) && (($number % 100 < 10) || ($number % 100 >= 20))) ? 1 : 2)];
 }

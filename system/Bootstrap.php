@@ -1,9 +1,6 @@
 <?php
 
-namespace App\System;
-
-use Wardex\Http\Request;
-use Wardex\Router\Router;
+namespace System;
 
 /**
  * Class Bootstrap
@@ -15,7 +12,7 @@ class Bootstrap
     public function start(): void
     {
         try {
-            [$controller, $action, $attributes] = Router::load(\dirname(__DIR__) . '/route.php')->match();
+            [$controller, $action, $attributes] = Router::load(\dirname(__DIR__) . '/app/route.php')->match();
             $request = request()->setAttributes($attributes);
             $controller = $this->getController($controller);
 
@@ -48,6 +45,6 @@ class Bootstrap
 
     protected function setRegistry(): void
     {
-        require \dirname(__DIR__) . '/register.php';
+        require \dirname(__DIR__) . '/app/register.php';
     }
 }

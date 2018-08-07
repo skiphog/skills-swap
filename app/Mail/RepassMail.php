@@ -3,7 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Users\User;
-use App\Component\Mailer\MailInterface;
+use System\Mailer\MailInterface;
 
 class RepassMail implements MailInterface
 {

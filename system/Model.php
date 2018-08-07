@@ -1,8 +1,6 @@
 <?php
 
-namespace App\System;
-
-use App\Component\SkillsDate;
+namespace System;
 
 /**
  * Class Model

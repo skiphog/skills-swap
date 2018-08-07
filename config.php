@@ -31,7 +31,7 @@ return [
      * Кеш
      */
     'cache' => [
-        'driver' => \Wardex\Cache\FileDriver::class,
+        'driver' => \System\Cache\FileDriver::class,
         'path'   => __DIR__ . '/cache'
     ],
 

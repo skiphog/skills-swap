@@ -2,23 +2,23 @@
 
 namespace App\Controllers\Auth;
 
+use System\Controller;
 use App\Component\Auth;
-use Wardex\Http\Request;
+use System\Http\Request;
 use App\Models\Users\User;
-use App\System\Controller;
-use App\Validate\LoginValidate;
+use App\Requests\LoginRequest;
 
 class AuthController extends Controller
 {
     /**
      * Аутентификация пользователя
      *
-     * @param Request       $request
-     * @param LoginValidate $validator
+     * @param Request      $request
+     * @param LoginRequest $validator
      *
-     * @return \Wardex\Http\Response
+     * @return \System\Http\Response
      */
-    public function login(Request $request, LoginValidate $validator)
+    public function login(Request $request, LoginRequest $validator)
     {
         $data = $request->post();
         $validator->validate($data);

@@ -1,35 +1,24 @@
 {
+  "name": "skipgog/skills-swap",
+  "license": "MIT",
+  "description": "Application skills-swap",
   "require": {
-    "php": "^7.2",
-    "skiphog/container": "^1.0",
-    "skiphog/wardex": "^1.0"
+    "php": "^7.2"
   },
   "autoload": {
     "psr-4": {
-      "App\\": "app/"
+      "App\\": "app/",
+      "System\\": "system/"
     },
     "files": [
-      "app/System/functions.php"
+      "system/functions.php"
     ]
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/skiphog/container"
-    },
-    {
-      "type": "git",
-      "url": "https://github.com/skiphog/wardex"
-    }
-  ],
   "config": {
     "preferred-install": "dist",
     "sort-packages": true,
     "optimize-autoloader": true
   },
   "minimum-stability": "dev",
-  "prefer-stable": true,
-  "name": "skipgog/wardex",
-  "license": "MIT",
-  "description": "Test application"
+  "prefer-stable": true
 }

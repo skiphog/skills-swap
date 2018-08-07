@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Component;
+namespace System;
 
 class SkillsDate extends \DateTimeImmutable implements \JsonSerializable
 {

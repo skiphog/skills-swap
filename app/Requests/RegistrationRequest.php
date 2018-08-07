@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Validate;
+namespace App\Requests;
 
-use App\Component\Validator\Validator;
+use System\Validator\Validator;
 use App\Models\Users\User;
 
-class RegistrationValidate extends Validator
+class RegistrationRequest extends Validator
 {
     protected static $fields = [
         'first_name',

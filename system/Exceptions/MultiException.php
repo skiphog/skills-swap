@@ -1,8 +1,6 @@
 <?php
 
-namespace App\Component\Validator;
-
-use Traversable;
+namespace System\Exceptions;
 
 class MultiException extends \Exception implements \JsonSerializable, \IteratorAggregate, \Countable
 {
@@ -66,7 +64,7 @@ class MultiException extends \Exception implements \JsonSerializable, \IteratorA
 
 
     /**
-     * @return \ArrayIterator|Traversable
+     * @return \ArrayIterator|\Traversable
      */
     public function getIterator()
     {

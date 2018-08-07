@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Validate;
+namespace App\Requests;
 
-use App\Component\Validator\Validator;
+use System\Http\FormRequest;
 
-class LoginValidate extends Validator
+class LoginRequest extends FormRequest
 {
     protected static $fields = [
         'email',
@@ -23,5 +23,10 @@ class LoginValidate extends Validator
     protected function password($value)
     {
         $this->trowIfEmpty($value, 'Пароль');
+    }
+
+    public function validate()
+    {
+        // TODO: Implement validate() method.
     }
 }

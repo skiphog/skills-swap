@@ -1,6 +1,6 @@
 <?php
 
-namespace App\System;
+namespace System;
 
 class Config
 {
@@ -8,7 +8,7 @@ class Config
 
     public function __construct()
     {
-        $this->config = require \dirname(__DIR__, 2) . '/config.php';
+        $this->config = require \dirname(__DIR__, 1) . '/config.php';
     }
 
     /**

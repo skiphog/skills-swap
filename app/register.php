@@ -1,7 +1,7 @@
 <?php
 
-use Skiphog\Container;
-use Wardex\Cache\Cache;
+use System\Container;
+use System\Cache\Cache;
 
 Container::set('auth', function () {
     return (new \App\Component\Auth())->getAuthUser();
