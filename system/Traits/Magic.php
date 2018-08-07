@@ -2,13 +2,9 @@
 
 namespace App\Traits;
 
-/**
- * Trait Magic
- * @package App\Traits
- */
 trait Magic
 {
-    protected $data = [];
+    private $data = [];
 
     public function __set($key, $value)
     {

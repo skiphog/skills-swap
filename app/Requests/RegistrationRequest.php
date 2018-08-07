@@ -2,10 +2,10 @@
 
 namespace App\Requests;
 
-use System\Validator\Validator;
 use App\Models\Users\User;
+use System\Http\FormRequest;
 
-class RegistrationRequest extends Validator
+class RegistrationRequest extends FormRequest
 {
     protected static $fields = [
         'first_name',

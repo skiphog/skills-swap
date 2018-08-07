@@ -35,7 +35,7 @@ abstract class Controller
         try {
             $response = $this->action($action, $request);
         } catch (MultiException $e) {
-            if ($request->isAjax()) {
+            if ($request->ajax()) {
                 return json(['errors' => $e], 422);
             }
 
@@ -52,12 +52,12 @@ abstract class Controller
      *
      * @return bool
      */
-    protected function access(): bool
+    protected function access()
     {
         return true;
     }
 
-    protected function before(): void
+    protected function before()
     {
     }
 
@@ -67,7 +67,7 @@ abstract class Controller
 
         $args = array_map(function (\ReflectionParameter $param) use ($request) {
             if (null === $arg = $param->getClass()) {
-                return $request->{$param->getName()};
+                return $request->get($param->getName());
             }
 
             return Container::get($arg->getName());

@@ -2,39 +2,36 @@
 
 namespace App\Controllers\Auth;
 
+use System\Controller;
 use App\Component\Auth;
 use App\Mail\RepassMail;
-use System\Http\Request;
+use System\Mailer\Mailer;
 use App\Models\Users\User;
-use System\Controller;
 use App\Mail\RegistrationMail;
 use App\Requests\RepassRequest;
-use System\Mailer\Mailer;
 use App\Requests\ConfirmRequest;
-use System\Exceptions\NotFoundException;
 use App\Requests\RegistrationRequest;
+use System\Exceptions\NotFoundException;
 
 class RegistrationController extends Controller
 {
     /**
      * Зарегистрировать пользователя
      *
-     * @param Request             $request
-     * @param RegistrationRequest $validator
+     * @param RegistrationRequest $request
      *
      * @return \System\Http\Response
      * @throws \Exception
      */
-    public function store(Request $request, RegistrationRequest $validator)
+    public function store(RegistrationRequest $request)
     {
-        $data = $request->post();
-        $validator->validate($data);
-
-        $data['password'] = password_hash(bin2hex(random_bytes(10)), PASSWORD_DEFAULT);
-        $data['token'] = hash_hmac('gost', bin2hex(random_bytes(16)) . implode('', $data), time());
+        $request->setAttributes([
+            'password' => password_hash(bin2hex(random_bytes(10)), PASSWORD_DEFAULT),
+            'token'    => hash_hmac('gost', bin2hex(random_bytes(16)) . implode('', $request->all()), time())
+        ]);
 
         $user = new User();
-        $user->fill($data)->save();
+        $user->fill($request)->save();
 
         Mailer::to($user->email)->send(new RegistrationMail($user));
 
@@ -67,26 +64,24 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @param Request       $request
-     * @param RepassRequest $validator
+     * @param RepassRequest $request
      *
      * @return \System\Http\Response
      * @throws \Exception
      */
-    public function retoken(Request $request, RepassRequest $validator)
+    public function retoken(RepassRequest $request)
     {
-        $data = $request->post();
-        $validator->validate($data);
-
-        if (!$user = User::findByField('email', $data['email'])) {
+        if (!$user = User::findByField('email', $request->post('email'))) {
             return json(['errors' => ['email' => 'Такого пользователя нет в базе']], 422);
         }
 
-        $data['password'] = password_hash(bin2hex(random_bytes(10)), PASSWORD_DEFAULT);
-        $data['token'] = hash_hmac('gost', bin2hex(random_bytes(16)) . implode('', $data), time());
-        $data['verified'] = 0;
+        $request->setAttributes([
+            'password' => password_hash(bin2hex(random_bytes(10)), PASSWORD_DEFAULT),
+            'token'    => hash_hmac('gost', bin2hex(random_bytes(16)) . implode('', $request->all()), time()),
+            'verified' => 0
+        ]);
 
-        $user->fill($data)->save();
+        $user->fill($request)->save();
 
         Mailer::to($user->email)->send(new RepassMail($user));
 
@@ -96,28 +91,26 @@ class RegistrationController extends Controller
     /**
      * Подтвердить email
      *
-     * @param Request        $request
-     * @param ConfirmRequest $validator
+     * @param ConfirmRequest $request
      *
      * @return \System\Http\Response
      * @throws \Exception
      */
-    public function confirm(Request $request, ConfirmRequest $validator)
+    public function confirm(ConfirmRequest $request)
     {
-        $data = $request->post();
-        $validator->validate($data);
-
-        if (!($user = User::findByTokenForConfirm($data['token']))) {
+        if (!($user = User::findByTokenForConfirm($request->post('token')))) {
             return json(['status' => 1]);
         }
 
-        $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-        $data['token'] = hash_hmac('gost', bin2hex(random_bytes(16)) . implode('', $data), time());
-        $data['verified'] = true;
+        $request->setAttributes([
+            'password' => password_hash($request->post('password'), PASSWORD_DEFAULT),
+            'token'    => hash_hmac('gost', bin2hex(random_bytes(16)) . implode('', $request->all()), time()),
+            'verified' => 1
+        ]);
 
-        $user->fill($data)->save();
+        $user->fill($request)->save();
 
-        Auth::attempt($user->id, $data);
+        Auth::attempt($user->id, $request->all());
 
         return json(['status' => 1])
             ->withSession('flash', 'Добро пожаловать');

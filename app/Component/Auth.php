@@ -47,7 +47,7 @@ class Auth
     }
 
 
-    public static function attempt($id, array $data)
+    public static function attempt($id, iterable $data)
     {
         $_SESSION[self::identificator()] = $id;
 

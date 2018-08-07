@@ -2,11 +2,6 @@
 
 namespace App\Traits;
 
-/**
- * Попробовал использовать
- * Trait IteratorAggregate
- * @package App\Traits
- */
 trait IteratorAggregate
 {
     protected $data = [];

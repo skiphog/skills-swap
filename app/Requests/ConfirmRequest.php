@@ -2,9 +2,9 @@
 
 namespace App\Requests;
 
-use System\Validator\Validator;
+use System\Http\FormRequest;
 
-class ConfirmRequest extends Validator
+class ConfirmRequest extends FormRequest
 {
     protected static $fields = [
         'password',

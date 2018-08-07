@@ -72,7 +72,7 @@ class Request implements \IteratorAggregate
      */
     public function all()
     {
-        return array_merge($this->get(), $this->post());
+        return array_merge($this->post(), $this->get());
     }
 
     /**

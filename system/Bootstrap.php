@@ -39,7 +39,7 @@ class Bootstrap
         $controller = 'App\\Controllers\\' . $controller;
 
         if (!class_exists($controller)) {
-            throw new \BadMethodCallException('Контроллера ' . $controller . ' не существует');
+            throw new \BadMethodCallException("Контроллера [ {$controller} ] не существует");
         }
 
         return new $controller();

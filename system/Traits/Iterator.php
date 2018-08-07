@@ -2,10 +2,6 @@
 
 namespace App\Traits;
 
-/**
- * Trait Iterator
- * @package App\Traits
- */
 trait Iterator
 {
     protected $data = [];

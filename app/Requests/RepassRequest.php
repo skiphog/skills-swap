@@ -2,9 +2,9 @@
 
 namespace App\Requests;
 
-use System\Validator\Validator;
+use System\Http\FormRequest;
 
-class RepassRequest extends Validator
+class RepassRequest extends FormRequest
 {
     protected static $fields = [
         'email',

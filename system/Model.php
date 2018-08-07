@@ -74,11 +74,11 @@ abstract class Model
     /**
      * Заполняет модель значениями
      *
-     * @param array $data
+     * @param iterable $data
      *
      * @return $this
      */
-    public function fill(array $data)
+    public function fill(iterable $data)
     {
         foreach ($data as $key => $value) {
             if (!\in_array($key, $this->fillable, true)) {

@@ -24,9 +24,4 @@ class LoginRequest extends FormRequest
     {
         $this->trowIfEmpty($value, 'Пароль');
     }
-
-    public function validate()
-    {
-        // TODO: Implement validate() method.
-    }
 }

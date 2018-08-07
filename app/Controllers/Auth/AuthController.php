@@ -4,7 +4,6 @@ namespace App\Controllers\Auth;
 
 use System\Controller;
 use App\Component\Auth;
-use System\Http\Request;
 use App\Models\Users\User;
 use App\Requests\LoginRequest;
 
@@ -13,26 +12,23 @@ class AuthController extends Controller
     /**
      * Аутентификация пользователя
      *
-     * @param Request      $request
-     * @param LoginRequest $validator
+     * @param LoginRequest $request
      *
      * @return \System\Http\Response
      */
-    public function login(Request $request, LoginRequest $validator)
+    public function login(LoginRequest $request)
     {
-        $data = $request->post();
-        $validator->validate($data);
-
-        if (!$user = User::findByField('email', $data['email'])) {
+        if (!$user = User::findByField('email', $request->post('email'))) {
             return json(['errors' => ['email' => 'Такого пользователя нет в базе']], 422);
         }
 
-        if (!password_verify($data['password'], $user->password)) {
+        if (!password_verify($request->post('password'), $user->password)) {
             return json(['errors' => ['password' => 'Парль неверный']], 422);
         }
 
-        $data['token'] = $user->token;
-        Auth::attempt($user->id, $data);
+        $request->setAttributes(['token' => $user->token]);
+
+        Auth::attempt($user->id, $request->all());
 
         return json(['status' => 1])->withSession('flash', 'Привет мой маленький, прыщавый друг');
     }
