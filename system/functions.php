@@ -210,6 +210,15 @@ function subText($text, $sub, $end = '')
     return $text;
 }
 
+function convertBite($bytes)
+{
+    $prefix = ['B', 'KB', 'MB', 'GB', 'TB', 'EB', 'ZB', 'YB'];
+
+    $class = min((int)log($bytes, 1024), count($prefix) - 1);
+
+    return sprintf('%1.2f %s', $bytes / 1024 ** $class, $prefix[$class]);
+}
+
 /**
  * @param $string
  *

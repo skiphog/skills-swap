@@ -82,5 +82,8 @@
 
 <script src="/js/app.js"></script>
 <?php echo $this->renderBlock('script'); ?>
+<?php if(auth()->isGuest()) : ?>
+    <script src="/js/modal.js"></script>
+<?php endif; ?>
 </body>
 </html>

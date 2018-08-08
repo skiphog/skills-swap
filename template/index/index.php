@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \Wardex\View\View $this
+ * @var \System\View $this
  */
 ?>
 <?php $this->extend('layouts/app'); ?>

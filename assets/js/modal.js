@@ -1,10 +1,32 @@
 ;(function () {
   let send;
+  const inputs = $('input.uk-input');
 
   $('.ss-auth').on('click', function (e) {
     e.preventDefault();
     UIkit.switcher('#auth-switch').show(+$(this).data('index'));
     UIkit.modal('#auth').show();
+  });
+
+  $('.uk-switcher').on('beforeshow', function () {
+    inputs.each(function (key, input) {
+      clearErrors($(input));
+    });
+  });
+
+  function clearErrors (o) {
+    if (o.hasClass('uk-form-danger')) {
+      o.removeClass('uk-form-danger').
+        prev().
+        removeClass('uk-text-danger').
+        parent().
+        next().
+        text('');
+    }
+  }
+
+  inputs.on('input', function () {
+    clearErrors($(this));
   });
 
   $('.auth').on('submit', '.auth-form', function (e) {
@@ -29,37 +51,51 @@
         send = null;
         spinner.addClass('uk-hidden');
       },
-      error: function (json) {
+      error: function (jqXHR) {
+        if (jqXHR.status !== 422) {
+          return alert('Forbidden!');
+        }
+
+        $.each(jqXHR['responseJSON']['errors'], function (key, value) {
+          $(`input[name=${key}]`).
+            addClass('uk-form-danger').
+            prev().
+            addClass('uk-text-danger').
+            parent().
+            next().
+            text(value);
+        });
 
       },
       success: function (json) {
-        callBack[form.data('callback')](json, form);
+        callBack.generalCallback(json, form, form.data('callback'));
       }
     });
   });
 
   const callBack = {
-    authLogin (json, form) {
+    form: null,
+    generalCallback (json, form, action) {
       if (json.status === 1) {
-        window.location.replace('/');
+        this.form = form;
+        callBack[action]();
       }
     },
-    authConfirm (json, form) {
-      if (json.status === 1) {
-        window.location.replace('/');
-      }
+    authLogin () {
+      window.location.replace('/');
     },
-    authRepass (json, form) {
-      if (json.status === 1) {
-        form.html(
-          '<div><span uk-icon="mail" class="uk-text-success"></span> <span class="uk-text-middle uk-text-primary">На ваш адрес выслано письмо для восстановления доступа </span></div>');
-      }
+    authConfirm () {
+      window.location.replace('/');
     },
-    authRegistration (json, form) {
-      if (json.status === 1) {
-        form.html(
-          '<div><span uk-icon="mail" class="uk-text-success"></span> <span class="uk-text-middle uk-text-primary">На ваш адрес выслано письмо с подтверждением регистрации.</span></div>');
-      }
+    authRepass () {
+      this.setStatusToForm('На ваш адрес выслано письмо для восстановления доступа');
+    },
+    authRegistration () {
+      this.setStatusToForm('На ваш адрес выслано письмо с подтверждением регистрации');
+    },
+    setStatusToForm (value) {
+      this.form.html(
+        `<div><span uk-icon="mail" class="uk-text-success"></span> <span class="uk-text-middle uk-text-primary">${value}</span></div>`);
     }
   };
 })();

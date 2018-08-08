@@ -2,11 +2,10 @@
 
 namespace System;
 
-use App\Middleware\ProfilerMiddleware;
-use System\Middleware\MiddlewareResolver;
 use System\Routing\Route;
 use System\Routing\Router;
 use System\Middleware\Pipline;
+use System\Middleware\MiddlewareResolver;
 
 /**
  * Class Bootstrap

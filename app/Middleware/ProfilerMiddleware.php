@@ -11,12 +11,10 @@ class ProfilerMiddleware extends Middleware
 
     public function handle(Request $request, callable $next)
     {
-        $start = microtime(true);
         /** @var Response $response */
         $response = $next($request);
-        $stop = microtime(true);
 
         return $response
-            ->withHeaders(['Profiler-Skip-Hog' => $stop - $start]);
+            ->withHeaders(['Profiler-Skip-Hog' => convertBite(memory_get_usage())]);
     }
 }

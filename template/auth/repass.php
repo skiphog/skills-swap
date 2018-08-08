@@ -25,6 +25,7 @@
                         <input class="uk-input"
                             type="text" name="email" placeholder="Почта" required>
                     </div>
+                    <div class="ss-form-error"></div>
                 </div>
 
                 <div class="uk-margin">

@@ -17,6 +17,7 @@
                                 <span class="uk-form-icon" uk-icon="icon: mail"></span>
                                 <input class="uk-input" type="email" name="email" placeholder="Электронная почта" required>
                             </div>
+                            <div class="ss-form-error"></div>
                         </div>
 
                         <div class="uk-margin">
@@ -24,6 +25,7 @@
                                 <span class="uk-form-icon" uk-icon="icon: unlock"></span>
                                 <input class="uk-input" type="password" name="password" placeholder="Пароль" required>
                             </div>
+                            <div class="ss-form-error"></div>
                         </div>
 
                         <div class="uk-margin">
@@ -31,6 +33,7 @@
                                 <input class="uk-checkbox" type="checkbox" name="remember" checked>
                                 Запомнить меня
                             </label>
+                            <div class="ss-form-error"></div>
                         </div>
 
                         <div class="uk-margin">
@@ -51,6 +54,7 @@
                                 <span class="uk-form-icon" uk-icon="icon: user"></span>
                                 <input id="first_name" class="uk-input" type="text" name="first_name">
                             </div>
+                            <div class="ss-form-error"></div>
                         </div>
 
                         <div class="uk-margin">
@@ -59,6 +63,7 @@
                                 <span class="uk-form-icon" uk-icon="icon: mail"></span>
                                 <input id="email" class="uk-input" type="email" name="email" required>
                             </div>
+                            <div class="ss-form-error"></div>
                         </div>
 
                         <div class="uk-margin">
@@ -66,6 +71,7 @@
                                 <input class="uk-checkbox" type="checkbox" name="confirm" checked required>
                                 Я согласен на <a>обработку моих персональных данных</a>
                             </label>
+                            <div class="ss-form-error"></div>
                         </div>
 
                         <div class="uk-margin">

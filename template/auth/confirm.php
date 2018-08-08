@@ -25,6 +25,7 @@
                         <input class="uk-input"
                                 type="text" name="password" placeholder="Пароль" autocomplete="off" required>
                     </div>
+                    <div class="ss-form-error"></div>
                 </div>
 
                 <div class="uk-margin">

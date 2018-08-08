@@ -10,7 +10,7 @@ UIkit.use(Icons);
 // global Uikit
 window.UIkit = UIkit;
 
-require('./modal');
+//require('./modal');
 
 /*UIkit.notification({
   message: 'Привет :)',
