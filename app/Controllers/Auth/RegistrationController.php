@@ -40,10 +40,6 @@ class RegistrationController extends Controller
 
     public function token($token)
     {
-        if (auth()->isUser()) {
-            return redirect('/');
-        }
-
         if (!$user = User::findByTokenForConfirm($token)) {
             throw new NotFoundException('Страница не найдена');
         }
@@ -56,10 +52,6 @@ class RegistrationController extends Controller
      */
     public function repass()
     {
-        if (auth()->isUser()) {
-            return redirect('/');
-        }
-
         return view('auth/repass');
     }
 
