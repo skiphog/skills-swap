@@ -1,6 +1,6 @@
 <?php
 
-namespace System;
+namespace System\Routing;
 
 use System\Exceptions\HttpException;
 
@@ -12,7 +12,7 @@ use System\Exceptions\HttpException;
 class Router
 {
     /**
-     * @var array $routes
+     * @var Route[]
      */
     protected $routes = [
         'GET'  => [],
@@ -23,6 +23,11 @@ class Router
      * @var string
      */
     protected $prefix;
+
+    /**
+     * @var array
+     */
+    protected $middleware = [];
 
     /**
      * @param string $path
@@ -45,30 +50,37 @@ class Router
     /**
      * @param string $pattern
      * @param string $handler
+     *
+     * @return Route
      */
     public function get($pattern, $handler)
     {
-        $this->setRoute('GET', $pattern, $handler);
+        return $this->setRoute('GET', $pattern, $handler);
     }
 
     /**
      * @param string $pattern
      * @param string $handler
+     *
+     * @return Route
      */
     public function post($pattern, $handler)
     {
-        $this->setRoute('POST', $pattern, $handler);
+        return $this->setRoute('POST', $pattern, $handler);
     }
 
     /**
-     * @param string   $prefix
-     * @param callable $callback
+     * @param string       $prefix
+     * @param callable     $callback
+     * @param string|array $middleware
      */
-    public function group($prefix, callable $callback)
+    public function group($prefix, callable $callback, $middleware = [])
     {
         $this->prefix = trim($prefix, '/');
+        $this->middleware = (array)$middleware;
         $callback($this);
         $this->prefix = null;
+        $this->middleware = [];
     }
 
     /**
@@ -80,9 +92,9 @@ class Router
     {
         $uri = $this->uri();
 
-        foreach ((array)$this->routes[$_SERVER['REQUEST_METHOD']] as $pattern => $handler) {
-            if (preg_match('#^' . $this->getPattern($pattern) . '$#', $uri, $matches)) {
-                return array_merge(explode('@', $handler), [$matches]);
+        foreach ((array)$this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
+            if (preg_match($route->pattern(), $uri, $matches)) {
+                return [$route, $matches];
             }
         }
 
@@ -107,12 +119,14 @@ class Router
      * @param string $method
      * @param string $pattern
      * @param string $handler
+     *
+     * @return Route
      */
     protected function setRoute($method, $pattern, $handler)
     {
         $pattern = trim($this->prefix . '/' . ltrim($pattern, '/'), '/');
 
-        $this->routes[$method][$pattern] = $handler;
+        return $this->routes[$method][] = new Route($handler, $pattern, $this->middleware);
     }
 
     /**
@@ -123,17 +137,5 @@ class Router
         $uri = ltrim($_SERVER['REQUEST_URI'], '/');
 
         return (false !== $pos = strpos($uri, '?')) ? substr($uri, 0, $pos) : $uri;
-    }
-
-    /**
-     * @param string $pattern
-     *
-     * @return string
-     */
-    protected function getPattern($pattern)
-    {
-        return preg_replace_callback('#{([^\}:]+):?([^\}]*?)\}#', function ($matches) {
-            return '(?P<' . $matches[1] . '>' . ($matches[2] ?: '.+') . ')';
-        }, $pattern);
     }
 }

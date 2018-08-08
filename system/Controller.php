@@ -22,10 +22,6 @@ abstract class Controller
      */
     public function callAction($action, Request $request)
     {
-        if (!method_exists($this, $action)) {
-            throw new \BadMethodCallException('Метод ' . $action . ' в контроллере ' . static::class . ' не найден');
-        }
-
         if (!$this->access()) {
             throw new ForbiddenException('Доступ запрещен');
         }

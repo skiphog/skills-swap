@@ -120,7 +120,7 @@ class Response
      *
      * @return Response
      */
-    public function withHeaders(array $header, $code = 200, $replace = true): Response
+    public function withHeaders(array $header, $code = null, $replace = false): Response
     {
         foreach ($header as $key => $value) {
             $this->setHeader($key . ': ' . $value, $code, $replace);
@@ -136,7 +136,7 @@ class Response
      * @param int    $code
      * @param bool   $replace
      */
-    protected function setHeader($header, $code, $replace = true): void
+    protected function setHeader($header, $code = null, $replace = true): void
     {
         header($header, $replace, $code);
     }

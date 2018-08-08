@@ -1,6 +1,6 @@
 <?php
 
-use System\Router;
+use System\Routing\Router;
 
 /**
  * @var Router $route
@@ -12,14 +12,17 @@ $route->get('/', 'IndexController@index');
 $route->get('/test/{id:\d+}/{token}', 'IndexController@index');
 
 
-
 $route->group('/auth', function (Router $r) {
-    $r->post('/login', 'Auth\AuthController@login');
-    $r->get('/logout', 'Auth\AuthController@logout');
-
+    $r->post('/login', 'Auth\AuthController@login')
+        ->middleware('guest');
+    $r->get('/logout', 'Auth\AuthController@logout')
+        ->middleware('auth');
     $r->get('/token/{token}', 'Auth\RegistrationController@token');
     $r->get('/repass', 'Auth\RegistrationController@repass');
+
     $r->post('/registration', 'Auth\RegistrationController@store');
+
     $r->post('/confirm', 'Auth\RegistrationController@confirm');
+
     $r->post('/repass', 'Auth\RegistrationController@retoken');
 });

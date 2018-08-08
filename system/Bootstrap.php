@@ -2,6 +2,12 @@
 
 namespace System;
 
+use App\Middleware\ProfilerMiddleware;
+use System\Middleware\MiddlewareResolver;
+use System\Routing\Route;
+use System\Routing\Router;
+use System\Middleware\Pipline;
+
 /**
  * Class Bootstrap
  *
@@ -12,17 +18,21 @@ class Bootstrap
     public function start(): void
     {
         try {
-            [$controller, $action, $attributes] = Router::load(\dirname(__DIR__) . '/app/route.php')->match();
+            /** @var Route $route */
+            [$route, $attributes] = Router::load(\dirname(__DIR__) . '/app/route.php')->match();
+            [$controller, $action] = $this->parseHandler(...$route->getHandler());
+
             $request = request()->setAttributes($attributes);
-
-
-            $controller = $this->getController($controller);
-
             $this->setRegistry();
 
-            $response = $controller->callAction($action, $request);
+            $pipline = new Pipline($controller, $action);
+            $resolver = new MiddlewareResolver($route);
 
-            echo $response;
+            foreach ($resolver->middleware() as $middleware) {
+                $pipline->pipe($middleware);
+            }
+
+            echo $pipline->run($request);
         } catch (\Exception $e) {
             http_response_code(404);
             var_dump($e->getMessage(), $e->getFile(), $e->getLine());
@@ -31,10 +41,11 @@ class Bootstrap
 
     /**
      * @param string $controller
+     * @param string $action
      *
-     * @return Controller
+     * @return array
      */
-    protected function getController($controller): Controller
+    protected function parseHandler($controller, $action)
     {
         $controller = 'App\\Controllers\\' . $controller;
 
@@ -42,7 +53,13 @@ class Bootstrap
             throw new \BadMethodCallException("Контроллера [ {$controller} ] не существует");
         }
 
-        return new $controller();
+        if (!method_exists($controller, $action)) {
+            throw new \BadMethodCallException(
+                'Метод { ' . $action . ' } в контроллере [ ' . static::class . ' ] не найден'
+            );
+        }
+
+        return [$controller, $action];
     }
 
     protected function setRegistry(): void
