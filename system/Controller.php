@@ -59,6 +59,7 @@ abstract class Controller
 
     protected function action($action, Request $request)
     {
+        //@todo обернуть в трай кетч// если такого метода нет. ошибка 500
         $method = new \ReflectionMethod($this, $action);
 
         $args = array_map(function (\ReflectionParameter $param) use ($request) {

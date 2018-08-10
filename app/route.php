@@ -6,7 +6,7 @@ use System\Routing\Router;
  * @var Router $route
  */
 
-$route->get('/', 'IndexController@index');
+$route->get('/', 'IndexController@index')->middleware('profiler');
 
 
 $route->get('/test/{id:\d+}/{token}', 'IndexController@index');

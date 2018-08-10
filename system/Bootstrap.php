@@ -2,10 +2,12 @@
 
 namespace System;
 
+use App\Middleware\Registrator;
+use System\Middleware\ErrorHandlerMiddleware;
+use System\Middleware\RouteMiddleware;
 use System\Routing\Route;
 use System\Routing\Router;
 use System\Middleware\Pipline;
-use System\Middleware\MiddlewareResolver;
 
 /**
  * Class Bootstrap
@@ -16,49 +18,15 @@ class Bootstrap
 {
     public function start(): void
     {
-        try {
-            /** @var Route $route */
-            [$route, $attributes] = Router::load(\dirname(__DIR__) . '/app/route.php')->match();
-            [$controller, $action] = $this->parseHandler(...$route->getHandler());
-
-            $request = request()->setAttributes($attributes);
-            $this->setRegistry();
-
-            $pipline = new Pipline($controller, $action);
-            $resolver = new MiddlewareResolver($route);
-
-            foreach ($resolver->middleware() as $middleware) {
-                $pipline->pipe($middleware);
-            }
-
-            echo $pipline->run($request);
-        } catch (\Exception $e) {
-            http_response_code(404);
-            var_dump($e->getMessage(), $e->getFile(), $e->getLine());
+        $this->setRegistry();
+        $pipline = new Pipline();
+        $pipline->pipe(ErrorHandlerMiddleware::class);
+        foreach (Registrator::$general_middleware as $middleware) {
+            $pipline->pipe($middleware);
         }
-    }
+        $pipline->pipe(RouteMiddleware::class);
 
-    /**
-     * @param string $controller
-     * @param string $action
-     *
-     * @return array
-     */
-    protected function parseHandler($controller, $action)
-    {
-        $controller = 'App\\Controllers\\' . $controller;
-
-        if (!class_exists($controller)) {
-            throw new \BadMethodCallException("Контроллера [ {$controller} ] не существует");
-        }
-
-        if (!method_exists($controller, $action)) {
-            throw new \BadMethodCallException(
-                'Метод { ' . $action . ' } в контроллере [ ' . static::class . ' ] не найден'
-            );
-        }
-
-        return [$controller, $action];
+        echo $pipline->run(request());
     }
 
     protected function setRegistry(): void

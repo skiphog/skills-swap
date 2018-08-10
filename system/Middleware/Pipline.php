@@ -9,22 +9,10 @@ class Pipline
      */
     protected $queue;
 
-    /**
-     * @var string \System\Controller
-     */
-    protected $controller;
 
-    /**
-     * @var string
-     */
-    protected $action;
-
-
-    public function __construct($controller, $action)
+    public function __construct()
     {
         $this->queue = new \SplQueue();
-        $this->controller = $controller;
-        $this->action = $action;
     }
 
     public function pipe($middleware)
@@ -34,16 +22,9 @@ class Pipline
 
     public function run($request)
     {
-        if ($this->queue->isEmpty()) {
-            /** @var \System\Controller $controller */
-            $controller = new $this->controller;
-
-            return $controller->callAction($this->action, $request);
-        }
-
-        /** @var Middleware $middleware */
+        /** @var MiddlewareInterface $middleware */
         $middleware = $this->queue->dequeue();
-        $middleware = new $middleware;
+        $middleware = $middleware instanceof \Closure ? $middleware() : new $middleware;
 
         return $middleware->handle($request, function ($request) {
             return $this->run($request);

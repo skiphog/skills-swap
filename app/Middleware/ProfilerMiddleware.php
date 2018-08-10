@@ -4,9 +4,9 @@ namespace App\Middleware;
 
 use System\Http\Request;
 use System\Http\Response;
-use System\Middleware\Middleware;
+use System\Middleware\MiddlewareInterface;
 
-class ProfilerMiddleware extends Middleware
+class ProfilerMiddleware implements MiddlewareInterface
 {
 
     public function handle(Request $request, callable $next)

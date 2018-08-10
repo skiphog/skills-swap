@@ -5,7 +5,7 @@ namespace App\Middleware;
 class Registrator
 {
     public static $general_middleware = [
-        ProfilerMiddleware::class
+        //ProfilerMiddleware::class,
     ];
 
     public static $middleware = [
