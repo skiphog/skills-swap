@@ -3,9 +3,9 @@
 namespace App\Middleware;
 
 use System\Http\Request;
-use System\Middleware\Middleware;
+use System\Middleware\MiddlewareInterface;
 
-class GuestMiddleware extends Middleware
+class GuestMiddleware implements MiddlewareInterface
 {
     /**
      * @param Request  $request
