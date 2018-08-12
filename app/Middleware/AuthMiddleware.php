@@ -3,9 +3,9 @@
 namespace App\Middleware;
 
 use System\Http\Request;
-use System\Middleware\Middleware;
+use System\Middleware\MiddlewareInterface;
 
-class AuthMiddleware extends Middleware
+class AuthMiddleware implements MiddlewareInterface
 {
 
     public function handle(Request $request, callable $next)
