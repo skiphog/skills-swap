@@ -2,12 +2,10 @@
 
 namespace System;
 
-use App\Middleware\Registrator;
-use System\Middleware\ErrorHandlerMiddleware;
-use System\Middleware\RouteMiddleware;
-use System\Routing\Route;
-use System\Routing\Router;
 use System\Middleware\Pipline;
+use App\Middleware\Registrator;
+use System\Middleware\RouteMiddleware;
+use System\Middleware\ErrorHandlerMiddleware;
 
 /**
  * Class Bootstrap

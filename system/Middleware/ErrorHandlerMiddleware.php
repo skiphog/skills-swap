@@ -3,6 +3,7 @@
 namespace System\Middleware;
 
 use System\Http\Request;
+use System\Middleware\ErrorHandler\ErrorGenerator;
 
 class ErrorHandlerMiddleware implements MiddlewareInterface
 {
@@ -11,9 +12,7 @@ class ErrorHandlerMiddleware implements MiddlewareInterface
         try {
             return $next($request);
         } catch (\Throwable $e) {
-            var_dump(\get_class($e));
-            var_dump($e);
-            die;
+            return (new ErrorGenerator($e, $request, true))->generate();
         }
     }
 }

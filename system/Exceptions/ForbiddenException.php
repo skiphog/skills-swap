@@ -9,5 +9,5 @@ namespace System\Exceptions;
  */
 class ForbiddenException extends \Exception
 {
-
+    protected $code = 403;
 }
