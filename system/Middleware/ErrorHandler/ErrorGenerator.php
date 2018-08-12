@@ -9,18 +9,18 @@ class ErrorGenerator
     /**
      * @var \Throwable
      */
-    private $e;
+    protected $e;
     /**
      * @var Request
      */
-    private $request;
+    protected $request;
 
     /**
      * @var bool
      */
-    private $debug;
+    protected $debug = false;
 
-    public function __construct(\Throwable $e, Request $request, $debug)
+    public function __construct(\Throwable $e, Request $request, $debug = false)
     {
         $this->e = $e;
         $this->request = $request;
@@ -29,6 +29,61 @@ class ErrorGenerator
 
     public function generate()
     {
+        if ($this->debug) {
+            return $this->generateDebug();
+        }
 
+        return $this->generateProduction();
+    }
+
+    protected function generateDebug()
+    {
+        $code = $this->getStatusCode();
+
+        if ($this->request->ajax()) {
+            return json([
+                'except'  => \get_class($this->e),
+                'message' => $this->e->getMessage(),
+                'line'    => $this->e->getLine(),
+                'file'    => $this->e->getFile(),
+                'code'    => $code
+            ], $code);
+        }
+
+        var_dump($this->e);
+        die;
+    }
+
+    protected function generateProduction()
+    {
+        $code = $this->getStatusCode();
+
+        if ($this->request->ajax()) {
+            return json([
+                'message' => $this->e->getMessage(),
+                'code'    => $code
+            ], $code);
+        }
+
+        return $this->generateTemplate($code);
+    }
+
+    protected function generateTemplate($code)
+    {
+        return $code;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getStatusCode()
+    {
+        $code = $this->e->getCode();
+
+        if ($code > 399 && $code < 600) {
+            return $code;
+        }
+
+        return 500;
     }
 }

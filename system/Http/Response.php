@@ -130,6 +130,18 @@ class Response
     }
 
     /**
+     * @param int $code
+     *
+     * @return $this
+     */
+    public function withCode($code)
+    {
+        http_response_code($code);
+
+        return $this;
+    }
+
+    /**
      * Устанавливает заголовок
      *
      * @param string $header
@@ -148,13 +160,13 @@ class Response
      * @param mixed $data
      *
      * @codeCoverageIgnore
+     * @throws \Exception
      */
     public function abort(int $code, $data = null): void
     {
         http_response_code($code);
-        echo $data;
 
-        die;
+        throw new \System\Exceptions\AbortException($data, $code);
     }
 
     /**
