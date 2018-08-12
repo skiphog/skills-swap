@@ -50,7 +50,8 @@ class ErrorGenerator
             ], $code);
         }
 
-        var_dump($this->e);
+        http_response_code($code);
+        var_dump($code, $this->e);
         die;
     }
 
@@ -60,7 +61,7 @@ class ErrorGenerator
 
         if ($this->request->ajax()) {
             return json([
-                'message' => $this->e->getMessage(),
+                'message' => 'Something went wrong',
                 'code'    => $code
             ], $code);
         }
@@ -70,6 +71,9 @@ class ErrorGenerator
 
     protected function generateTemplate($code)
     {
+        //@todo Сделать шаблоны или контроллеры для вывода ошибок
+        http_response_code($code);
+
         return $code;
     }
 

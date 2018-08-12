@@ -30,7 +30,6 @@ class Container
      * @param string $name
      *
      * @return object|mixed
-     * @throws \Exception
      */
     public static function get($name)
     {
@@ -72,7 +71,6 @@ class Container
      * @param string $name
      *
      * @return bool|object
-     * @throws \Exception
      */
     protected static function autoResolve($name)
     {

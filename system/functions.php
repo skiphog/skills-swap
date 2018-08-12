@@ -9,12 +9,7 @@
  */
 function app($name)
 {
-    try {
-        return \System\Container::get($name);
-    } catch (Exception $e) {
-        var_dump($e);
-        die;
-    }
+    return \System\Container::get($name);
 }
 
 /**
