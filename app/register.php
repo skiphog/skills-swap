@@ -12,3 +12,5 @@ Container::set('cache', function () {
 
     return new Cache(new $config['driver']($config['path']));
 });
+
+//@todo add all dependenses
