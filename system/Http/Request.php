@@ -7,7 +7,7 @@ namespace System\Http;
  *
  * @package System\Http
  */
-class Request implements \IteratorAggregate
+class Request
 {
     /**
      * @var array
@@ -29,6 +29,11 @@ class Request implements \IteratorAggregate
      */
     protected $cookie;
 
+    /**
+     * @var array
+     */
+    protected $all;
+
     public function __construct()
     {
         $this->get = $_GET;
@@ -44,7 +49,7 @@ class Request implements \IteratorAggregate
      */
     public function get($params = null)
     {
-        return $this->getRequest('get', $params);
+        return $this->getData($this->get, $params);
     }
 
     /**
@@ -54,7 +59,7 @@ class Request implements \IteratorAggregate
      */
     public function post($params = null)
     {
-        return $this->getRequest('post', $params);
+        return $this->getData($this->post, $params);
     }
 
     /**
@@ -64,7 +69,7 @@ class Request implements \IteratorAggregate
      */
     public function cookie($params = null)
     {
-        return $this->getRequest('cookie', $params);
+        return $this->getData($this->cookie, $params);
     }
 
     /**
@@ -72,7 +77,11 @@ class Request implements \IteratorAggregate
      */
     public function all()
     {
-        return array_merge($this->post(), $this->get());
+        if (null !== $this->all) {
+            return $this->all;
+        }
+
+        return $this->all = array_merge($this->post(), $this->get());
     }
 
     /**
@@ -84,7 +93,7 @@ class Request implements \IteratorAggregate
     {
         $all = $this->all();
 
-        return $this->getAll($all, $args);
+        return $this->getData($all, $args);
     }
 
     /**
@@ -112,6 +121,16 @@ class Request implements \IteratorAggregate
     }
 
     /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function has($name)
+    {
+        return array_key_exists($name, $this->all());
+    }
+
+    /**
      * @param string $filename
      *
      * @return bool
@@ -132,14 +151,17 @@ class Request implements \IteratorAggregate
     }
 
     /**
-     * @param array $params
+     * @param string|array $name
+     * @param string|null  $value
      *
      * @return Request
      */
-    public function setAttributes(array $params)
+    public function setAttributes($name, $value = null)
     {
-        foreach ($params as $key => $value) {
-            \is_string($key) && $this->get[$key] = $value;
+        $this->all = null;
+
+        foreach (\is_array($name) ? $name : [$name => $value] as $key => $item) {
+            \is_string($key) && $this->get[$key] = $item;
         }
 
         return $this;
@@ -192,31 +214,18 @@ class Request implements \IteratorAggregate
     }
 
     /**
-     * @param $param
-     * @param $args
-     *
-     * @return array|string|null
-     */
-    protected function getRequest($param, $args)
-    {
-        $data = array_map('trim', $this->{$param});
-
-        return $this->getAll($data, $args);
-    }
-
-    /**
      * @param $data
      * @param $args
      *
      * @return array|string|null
      */
-    protected function getAll(&$data, $args)
+    protected function getData(&$data, $args)
     {
         if (null === $args) {
             return $data;
         }
 
-        if (!\is_array($args)) {
+        if (\is_string($args)) {
             return $data[$args] ?? null;
         }
 
@@ -229,11 +238,18 @@ class Request implements \IteratorAggregate
         return $result;
     }
 
-    /**
-     * @return \ArrayIterator|\Traversable
-     */
-    public function getIterator()
+    public function __set($name, $value)
     {
-        return new \ArrayIterator($this->all());
+        $this->setAttributes($name, $value);
+    }
+
+    public function __get($name)
+    {
+        return $this->input($name);
+    }
+
+    public function __isset($name)
+    {
+        return $this->has($name);
     }
 }

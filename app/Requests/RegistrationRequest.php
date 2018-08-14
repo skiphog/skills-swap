@@ -7,7 +7,7 @@ use System\Http\FormRequest;
 
 class RegistrationRequest extends FormRequest
 {
-    protected static $fields = [
+    protected static $rules = [
         'first_name',
         'email',
         'confirm'

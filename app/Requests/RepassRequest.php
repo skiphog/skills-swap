@@ -6,7 +6,7 @@ use System\Http\FormRequest;
 
 class RepassRequest extends FormRequest
 {
-    protected static $fields = [
+    protected static $rules = [
         'email',
     ];
 

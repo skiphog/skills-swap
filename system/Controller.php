@@ -2,6 +2,7 @@
 
 namespace System;
 
+use System\Exceptions\HttpException;
 use System\Http\Request;
 use System\Exceptions\MultiException;
 use System\Exceptions\ForbiddenException;
@@ -35,9 +36,13 @@ abstract class Controller
                 return json(['errors' => $e], 422);
             }
 
-            return back()
-                ->withInputs($request)
-                ->withSession('errors', $e->toArray());
+            if ($request->type() === 'POST') {
+                return back()
+                    ->withInputs($request)
+                    ->withSession('errors', $e->toArray());
+            }
+            //@todo:: что-то придумать!
+            throw $e;
         }
 
         return $response;

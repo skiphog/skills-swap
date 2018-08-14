@@ -6,7 +6,7 @@ use System\Http\FormRequest;
 
 class ConfirmRequest extends FormRequest
 {
-    protected static $fields = [
+    protected static $rules = [
         'password',
         'token',
     ];
