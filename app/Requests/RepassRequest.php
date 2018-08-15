@@ -6,16 +6,13 @@ use System\Http\FormRequest;
 
 class RepassRequest extends FormRequest
 {
-    protected static $rules = [
-        'email',
-    ];
-
-    protected function email($value)
+    /**
+     * @return array
+     */
+    public function rules(): array
     {
-        $this->trowIfEmpty($value, 'email');
-
-        if (false === filter_var($value, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException('Проверьте корректность Email');
-        }
+        return [
+            'email' => 'required|email'
+        ];
     }
 }

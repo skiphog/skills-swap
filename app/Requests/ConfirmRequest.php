@@ -6,22 +6,18 @@ use System\Http\FormRequest;
 
 class ConfirmRequest extends FormRequest
 {
-    protected static $rules = [
-        'password',
-        'token',
+    protected static $messages = [
+        'password.min' => 'Пожалуйста, придумайте пароль, который больше трех символов'
     ];
 
-    public function password($value)
+    /**
+     * @return array
+     */
+    public function rules(): array
     {
-        $this->trowIfEmpty($value, 'Пароль');
-
-        if (mb_strlen($value) < 3) {
-            throw new \InvalidArgumentException('Пароль должен быть не меньше трех символов');
-        }
-    }
-
-    public function token($value)
-    {
-        $this->trowIfEmpty($value, 'Токен');
+        return [
+            'password' => 'required|min:3',
+            'token'    => 'required',
+        ];
     }
 }
