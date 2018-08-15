@@ -15,20 +15,32 @@ class Max extends Validator
 
         $param = (int)$this->params;
 
-        if (\is_int($value) && $value > $param) {
-            throw new ValidateException($this->getMessage("Поле {$this->field} должно быть не более {$param}"));
+        if (\is_string($value)) {
+            if (\mb_strlen($value) > $param) {
+                throw new ValidateException(
+                    $this->getMessage("Количество символов в поле {$this->field} должно быть не более {$param}")
+                );
+            }
+
+            return $value;
         }
 
-        if (\is_string($value) && mb_strlen($value) > $param) {
-            throw new ValidateException(
-                $this->getMessage("Количество символов в поле {$this->field} должно быть не более {$param}")
-            );
+        if (\is_int($value)) {
+            if ($value > $param) {
+                throw new ValidateException($this->getMessage("Поле {$this->field} должно быть не более {$param}"));
+            }
+
+            return $value;
         }
 
-        if (\is_array($value) && \count($value) > $param) {
-            throw new ValidateException(
-                $this->getMessage("Количество элементов в массиве {$this->field} должно быть не более {$param}")
-            );
+        if (\is_array($value)) {
+            if (\count($value) > $param) {
+                throw new ValidateException(
+                    $this->getMessage("Количество элементов в массиве {$this->field} должно быть не более {$param}")
+                );
+            }
+
+            return $value;
         }
 
         return $value;

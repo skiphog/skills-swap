@@ -18,20 +18,28 @@ class Between extends Validator
             throw new RuleException("Передан неверный параметр в between [{$this->params}]");
         }
 
-        if (\is_int($value) && ($value < $min || $value > $max)) {
-            throw new ValidateException($this->getMessage("Поле {$this->field} должно быть между {$min} и {$max}"));
+        if (\is_int($value)) {
+            if ($value < $min || $value > $max) {
+                throw new ValidateException($this->getMessage("Поле {$this->field} должно быть между {$min} и {$max}"));
+            }
+
+            return $value;
         }
 
-        if (\is_string($value) && (($length = mb_strlen($value)) < $min || $length > $max)) {
-            throw new ValidateException(
-                $this->getMessage("Количество символов в поле {$this->field} должно быть между {$min} и {$max}")
-            );
+        if (\is_string($value)) {
+            if (($length = mb_strlen($value)) < $min || $length > $max) {
+                $this->getMessage("Количество символов в поле {$this->field} должно быть между {$min} и {$max}");
+            }
+
+            return $value;
         }
 
-        if (\is_array($value) && (($count = \count($value)) < $min || $count > $max)) {
-            throw new ValidateException(
-                $this->getMessage("Количество элементов в массиве {$this->field} должно быть между {$min} и {$max}")
-            );
+        if (\is_array($value)) {
+            if (($count = \count($value)) < $min || $count > $max) {
+                $this->getMessage("Количество элементов в массиве {$this->field} должно быть между {$min} и {$max}");
+            }
+
+            return $value;
         }
 
         return $value;
