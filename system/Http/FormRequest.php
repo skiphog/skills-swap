@@ -6,7 +6,6 @@ use System\Exceptions\RuleException;
 use System\Exceptions\MultiException;
 use System\Exceptions\ValidateException;
 use System\Exceptions\ForbiddenException;
-use System\Validate\Validator;
 
 /**
  * Class FormRequest
@@ -116,13 +115,6 @@ abstract class FormRequest implements \IteratorAggregate
         //  если что, то здесь casting
 
         $this->request->setAttributes($this->validated_fields);
-    }
-
-    public function trowIfEmpty($value, $field)
-    {
-        if (empty($value)) {
-            throw new \InvalidArgumentException("Поле {$field} обязателено к заполнению");
-        }
     }
 
     /**
