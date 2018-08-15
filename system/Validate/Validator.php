@@ -35,8 +35,8 @@ abstract class Validator
 
     public function process($value)
     {
-        if (null === $value) {
-            return $value;
+        if (null === $value || '' === $value) {
+            return '';
         }
 
         return $this->validate($value);

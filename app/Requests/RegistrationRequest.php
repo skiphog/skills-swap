@@ -7,21 +7,6 @@ use System\Http\FormRequest;
 
 class RegistrationRequest extends FormRequest
 {
-    protected static $rules = [
-        'first_name',
-        'email',
-        'confirm'
-    ];
-
-    public function firstName($value)
-    {
-        $this->trowIfEmpty($value, 'Имя');
-
-        if (mb_strlen($value) > 100) {
-            throw new \InvalidArgumentException('Слишком длинное имя');
-        }
-    }
-
     public function email($value)
     {
         $this->trowIfEmpty($value, 'email');
@@ -35,19 +20,21 @@ class RegistrationRequest extends FormRequest
         }
     }
 
-    public function password($value)
-    {
-        $this->trowIfEmpty($value, 'Пароль');
+    protected static $messages = [
+        'first_name.required' => 'Пожалуйста, заполните ваше Имя',
+        'first_name.max'      => 'Разве может быть такое длинное Имя?',
+        'email.unique'        => 'Такой пользователь уже существует'
+    ];
 
-        if (mb_strlen($value) < 3) {
-            throw new \InvalidArgumentException('Пароль должен быть не меньше трех символов');
-        }
-    }
-
-    public function confirm($value)
+    /**
+     * @return array
+     */
+    public function rules(): array
     {
-        if (empty($value)) {
-            throw new \InvalidArgumentException('Поставьте галочку');
-        }
+        return [
+            'first_name' => 'required|max:100',
+            'email'      => 'required|email|unique:users',
+            'confirm'    => 'required'
+        ];
     }
 }

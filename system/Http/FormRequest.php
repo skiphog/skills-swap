@@ -6,6 +6,7 @@ use System\Exceptions\RuleException;
 use System\Exceptions\MultiException;
 use System\Exceptions\ValidateException;
 use System\Exceptions\ForbiddenException;
+use System\Validate\Validator;
 
 /**
  * Class FormRequest
@@ -28,11 +29,6 @@ abstract class FormRequest implements \IteratorAggregate
     /**
      * @var array
      */
-    protected static $rules = [];
-
-    /**
-     * @var array
-     */
     protected static $casting = [];
 
     /**
@@ -40,8 +36,15 @@ abstract class FormRequest implements \IteratorAggregate
      */
     protected static $messages = [];
 
-
+    /**
+     * @var array
+     */
     protected $validated_fields = [];
+
+    /**
+     * @return array
+     */
+    abstract public function rules(): array;
 
     /**
      * FormRequest constructor.
@@ -77,7 +80,7 @@ abstract class FormRequest implements \IteratorAggregate
     {
         $data = $this->request->all();
 
-        foreach (static::$rules as $key => $rules) {
+        foreach ($this->rules() as $key => $rules) {
             $value = isset($data[$key]) ? trim($data[$key]) : null;
             foreach (explode('|', $rules) as $rule) {
                 $args = null;
@@ -102,6 +105,7 @@ abstract class FormRequest implements \IteratorAggregate
                     break;
                 }
             }
+
             null !== $value && $this->validated_fields[$key] = $value;
         }
 

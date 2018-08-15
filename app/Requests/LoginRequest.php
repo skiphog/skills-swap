@@ -6,8 +6,20 @@ use System\Http\FormRequest;
 
 class LoginRequest extends FormRequest
 {
-    protected static $rules = [
-        'email'    => 'email',
-        'password' => 'required|min:3'
+
+    protected static $messages = [
+        'email.email'  => 'Пожалуйста, введите корректный электронный адрес',
+        'password.min' => 'Слишком короткий пароль'
     ];
+
+    /**
+     * @return array
+     */
+    public function rules(): array
+    {
+        return [
+            'email'    => 'required|email',
+            'password' => 'required|min:3'
+        ];
+    }
 }

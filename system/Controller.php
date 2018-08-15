@@ -42,7 +42,8 @@ abstract class Controller
                     ->withSession('errors', $e->toArray());
             }
             //@todo:: что-то придумать!
-            throw $e;
+            var_dump($e->toArray());
+            die;
         }
 
         return $response;
