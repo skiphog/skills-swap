@@ -30,21 +30,6 @@ class User extends Model
     protected static $table = 'users';
 
     /**
-     * @param $email
-     *
-     * @return bool
-     */
-    public static function existsEmail($email)
-    {
-        $sql = 'select exists(select id from users where email = :email)';
-
-        $sth = db()->prepare($sql);
-        $sth->execute(['email' => $email]);
-
-        return (bool)$sth->fetchColumn();
-    }
-
-    /**
      * @param $name
      * @param $value
      *
