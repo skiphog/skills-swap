@@ -60,6 +60,9 @@ class User extends Model
         return $sth->fetchObject(static::class);
     }
 
+    /**
+     * @param $value
+     */
     public function setVerified($value)
     {
         $this->verified = (bool)$value;
