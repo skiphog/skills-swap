@@ -1,16 +1,21 @@
 <?php
 
-use System\Container;
-use System\Cache\Cache;
+return [
+    'config'  => function () {
+        return new \System\Config();
+    },
+    'db'      => function () {
+        return new \System\DataBase();
+    },
+    'auth'    => function () {
+        return (new \App\Component\Auth())->getAuthUser();
+    },
+    'request' => function () {
+        return new \System\Http\Request();
+    },
+    'cache'   => function () {
+        $config = config('cache');
 
-Container::set('auth', function () {
-    return (new \App\Component\Auth())->getAuthUser();
-});
-
-Container::set('cache', function () {
-    $config = config('cache');
-
-    return new Cache(new $config['driver']($config['path']));
-});
-
-//@todo add all dependenses
+        return new \System\Cache\Cache(new $config['driver']($config['path']));
+    }
+];

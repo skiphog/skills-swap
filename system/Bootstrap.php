@@ -29,6 +29,8 @@ class Bootstrap
 
     protected function setRegistry(): void
     {
-        require \dirname(__DIR__) . '/app/register.php';
+        foreach (require \dirname(__DIR__) . '/app/register.php' as $key => $value) {
+            Container::set($key, $value);
+        }
     }
 }

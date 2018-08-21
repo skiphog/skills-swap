@@ -19,7 +19,15 @@ function app($name)
  */
 function config($key)
 {
-    return app(\System\Config::class)->get($key);
+    return app('config')->get($key);
+}
+
+/**
+ * @return \System\DataBase
+ */
+function db()
+{
+    return app('db');
 }
 
 /**
@@ -31,11 +39,11 @@ function auth()
 }
 
 /**
- * @return \System\DataBase
+ * @return \System\Http\Request
  */
-function db()
+function request()
 {
-    return app(\System\DataBase::class);
+    return app('request');
 }
 
 /**
@@ -44,14 +52,6 @@ function db()
 function cache()
 {
     return app('cache');
-}
-
-/**
- * @return \System\Http\Request
- */
-function request()
-{
-    return app(\System\Http\Request::class);
 }
 
 /**

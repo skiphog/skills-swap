@@ -160,7 +160,6 @@ class Response
      * @param mixed $data
      *
      * @codeCoverageIgnore
-     * @throws \Exception
      */
     public function abort(int $code, $data = null): void
     {

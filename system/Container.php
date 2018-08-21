@@ -66,6 +66,22 @@ class Container
     }
 
     /**
+     * @return array
+     */
+    public static function definitions()
+    {
+        return self::$definitions;
+    }
+
+    /**
+     * @return array
+     */
+    public static function registry()
+    {
+        return self::$registry;
+    }
+
+    /**
      * Attempt to auto resolve the dependency chain.
      *
      * @param string $name
