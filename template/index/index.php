@@ -11,17 +11,7 @@
 <?php $this->start('content'); ?>
 
 
-    <div class="uk-section-primary ss-theme-book">
-        <div class="ss-banner">
-            <img class="ss-tm-baner" src="/img/swap.png" width="749" height="125" alt="Логотип">
-            <div class="uk-container uk-text-center">
-                <div class="ss-button-book-group">
-                    <a class="ss-auth uk-button ss-button-book uk-visible@s" data-index="0">Начать</a>
-                    <a class="ss-auth uk-button ss-button-book uk-hidden@s" data-index="0">Начать</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="ss-theme-book"></div>
 
     <div class="uk-section uk-section-primary uk-section-small uk-flex uk-flex-middle uk-text-center ss-section-first">
 

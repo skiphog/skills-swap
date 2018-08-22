@@ -5,20 +5,47 @@ $global-secondary-background: #24b662 !default;
 $global-danger-background: #c9302c !default;
 $ss-theme-background: #3bb6d5 !default;
 
+$global-link-color: #fff !default;
+$global-link-hover-color: #fff !default;
+$base-link-hover-text-decoration: none !default;
+
 // 2. Import default variables and available mixins.
 @import "~uikit/src/scss/variables-theme.scss";
 @import "~uikit/src/scss/mixins-theme.scss";
+
+@mixin hook-inverse-base-link() {
+  opacity: .9;
+}
+
+@mixin hook-inverse-base-link-hover() {
+  opacity: 1;
+}
 
 // 3. Your custom mixin overwrites.
 //@mixin hook-card() { color: #ffff00; }
 
 // 4. Import UIkit.
 @import "~uikit/src/scss/uikit-theme.scss";
-@import "modal";
-@import "drop-profile";
 
 body {
   overflow-y: scroll;
+}
+
+.ss-navbar {
+  position: fixed;
+  width: 100%;
+}
+
+.ss-brand {
+  font-size: 2rem;
+}
+
+.ss-auth {
+  color: #fff !important;
+  opacity: .9;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .uk-button, .uk-input {
@@ -31,28 +58,25 @@ body {
   padding: 0 10px;
 }
 
-.ss-banner {
-  height: 100%;
-  width: 100%;
-  background: $ss-theme-background url(/img/swap3.jpg) 50% 50% no-repeat;
-  background-size: cover;
+.ss-theme-book {
+  height: 100vh;
+  min-height: 680px;
+  background: $ss-theme-background url(/img/swap5.jpg) 50% 50% no-repeat;
+  background-size: contain;
+
+  @media (max-width: 640px) {
+    background-size: cover;
+  }
+
 }
 
 .ss-section-first {
   background: url(/img/background.svg) 50% 10% no-repeat, linear-gradient(to left top, #28a5f5, #1e87f0) 0 0 no-repeat
 }
 
-.ss-theme-book, .ss-section-second {
-  background: $ss-theme-background;
-}
-
-.ss-theme-book {
-  height: 100vh;
-  min-height: 680px;
-}
-
 .ss-section-second {
   color: #fff !important;
+  background: $ss-theme-background;
 }
 
 .ss-section-footer {
@@ -94,3 +118,6 @@ body {
 .ss-hovered {
   cursor: pointer;
 }
+
+@import "modal";
+@import "drop-profile";
