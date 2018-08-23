@@ -25,8 +25,8 @@
             </p>
 
             <div class="uk-flex-inline uk-flex-center uk-margin-large-bottom">
-                <a class="ss-auth uk-button uk-button-primary ss-button-primary uk-button-large tm-button-large uk-visible@s" data-index="0">Get Started</a>
-                <a class="ss-auth uk-button uk-button-primary ss-button-primary uk-hidden@s" data-index="0">Get Started</a>
+                <a class="uk-button uk-button-primary ss-button-primary uk-button-large tm-button-large uk-visible@s" data-index="0">Get Started</a>
+                <a class="uk-button uk-button-primary ss-button-primary uk-hidden@s" data-index="0">Get Started</a>
             </div>
         </div>
 

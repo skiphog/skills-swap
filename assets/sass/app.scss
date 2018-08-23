@@ -1,28 +1,30 @@
-// 1. Your custom variables and variable overwrites.
-//$global-link-color: #da4c59;
-$global-primary-background: #1e87f0 !default;
-$global-secondary-background: #24b662 !default;
-$global-danger-background: #c9302c !default;
-$ss-theme-background: #3bb6d5 !default;
 
-$global-link-color: #fff !default;
-$global-link-hover-color: #fff !default;
-$base-link-hover-text-decoration: none !default;
+$global-primary-background: #3bb6d5;
+$global-secondary-background: #1e87f0;
+$global-danger-background: #c9302c;
+$ss-theme-background: #3bb6d5;
+
+$global-link-color: #3bb6d5;
+$global-link-hover-color: darken($global-link-color, 10%);
+
+//$global-link-color: #fff;
+//$global-link-hover-color: #fff;
+$base-link-hover-text-decoration: none;
 
 // 2. Import default variables and available mixins.
 @import "~uikit/src/scss/variables-theme.scss";
 @import "~uikit/src/scss/mixins-theme.scss";
 
-@mixin hook-inverse-base-link() {
-  opacity: .9;
+@mixin hook-form-single-line(){
+  border-radius: 500px;
 }
 
-@mixin hook-inverse-base-link-hover() {
-  opacity: 1;
+@mixin hook-button(){
+  text-transform: $button-text-transform;
+  transition: 0.1s ease-in-out;
+  transition-property: color, background-color, border-color;
+  border-radius: 500px;
 }
-
-// 3. Your custom mixin overwrites.
-//@mixin hook-card() { color: #ffff00; }
 
 // 4. Import UIkit.
 @import "~uikit/src/scss/uikit-theme.scss";
@@ -48,10 +50,6 @@ body {
   }
 }
 
-.uk-button, .uk-input {
-  border-radius: 500px;
-}
-
 .ss-tm-baner {
   display: block;
   margin: 0 auto;
@@ -63,6 +61,7 @@ body {
   min-height: 680px;
   background: $ss-theme-background url(/img/swap5.jpg) 50% 50% no-repeat;
   background-size: contain;
+  margin-top: -80px;
 
   @media (max-width: 640px) {
     background-size: cover;
@@ -88,7 +87,6 @@ body {
 }
 
 .ss-button-primary {
-  border-radius: 500px;
   background: #fff !important;
   color: #1e87f0 !important;
 
@@ -97,22 +95,8 @@ body {
   }
 }
 
-.ss-button-book-group {
-  margin-top: 330px;
-  margin-left: 3%;
-}
-
-.ss-button-book {
-  border-radius: 500px;
-  background: #1e87f0;
-  padding: 0 20px;
-  &:hover {
-    box-shadow: 0 10px 40px #1e87f0
-  }
-}
-
 [uk-spinner] {
-  color: #0e6ecd;
+  color: $ss-theme-background;
 }
 
 .ss-hovered {
