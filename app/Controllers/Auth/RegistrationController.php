@@ -90,7 +90,7 @@ class RegistrationController extends Controller
      */
     public function confirm(ConfirmRequest $request)
     {
-        if (!($user = User::findByTokenForConfirm($request->post('token')))) {
+        if (!$user = User::findByTokenForConfirm($request->post('token'))) {
             return json(['status' => 1]);
         }
 

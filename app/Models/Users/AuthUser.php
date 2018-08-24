@@ -13,4 +13,12 @@ class AuthUser extends User
     {
         return !$this->isUser();
     }
+
+    public function findBySession($id)
+    {
+    }
+
+    public function findByToken($token)
+    {
+    }
 }
