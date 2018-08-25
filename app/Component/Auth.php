@@ -31,7 +31,7 @@ class Auth
 
     protected function init()
     {
-        $id = self::identificator();
+        $id = self::identifier();
 
         if (!empty($_SESSION[$id]) && $user = AuthUser::findById($_SESSION[$id])) {
             return $this->user = $user;
@@ -49,7 +49,7 @@ class Auth
 
     public static function attempt($id, iterable $data)
     {
-        $_SESSION[self::identificator()] = $id;
+        $_SESSION[self::identifier()] = $id;
 
         if (!empty($data['remember'])) {
             setcookie('token', $data['token'], 0x7FFFFFFF, '/', '', false, true);
@@ -58,7 +58,7 @@ class Auth
 
     public static function logout()
     {
-        unset($_SESSION[self::identificator()]);
+        unset($_SESSION[self::identifier()]);
 
         //session_destroy();
 
@@ -70,11 +70,11 @@ class Auth
     }
 
     /**
-     * Сгенерировать идентефикатор
+     * Сгенерировать идентификатор
      *
      * @return string
      */
-    public static function identificator(): string
+    public static function identifier(): string
     {
         return sprintf('user_%s', md5($_SERVER['HTTP_USER_AGENT'] . $_SERVER['REMOTE_ADDR']));
     }
