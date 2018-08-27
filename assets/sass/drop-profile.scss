@@ -1,16 +1,19 @@
 .ss-drop-profile {
   border-radius: 6px;
-  background: #2497f3;
   width: 150px;
   padding: 10px;
 
   li:not(:last-child) {
-    border-bottom: 1px dashed #3bb6d5;
+    border-bottom: 1px dashed #2799b6;
   }
 
   a {
-    /* text-transform: uppercase;*/
+    text-transform: uppercase;
     padding: 10px 0 !important;
+    color: #2799b6 !important;
+    &:hover, &:focus {
+      color: darken(#2799b6, 10%) !important;
+    }
   }
   &::after {
     content: '';
@@ -21,16 +24,14 @@
     height: 10px;
     border-width: 0 0 1px 1px;
     border-style: solid;
-    border-color: #2497f3;
+    border-color: #fff;
     transform-origin: center;
     transform: translateY(-50%) rotate(135deg);
-    background: #2497f3;
+    background: #fff;
     margin-top: 1px;
-
   }
 }
 
 .ss-profile-name {
   padding-left: 10px;
-  color: #fff;
 }
