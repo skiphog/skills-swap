@@ -23,14 +23,15 @@ class AuthController extends Controller
         }
 
         if (!password_verify($request->post('password'), $user->password)) {
-            return json(['errors' => ['password' => 'Парль неверный']], 422);
+            return json(['errors' => ['password' => 'Пароль неверный']], 422);
         }
 
         $request->setAttributes(['token' => $user->token]);
 
         Auth::attempt($user->id, $request->all());
 
-        return json(['status' => 1])->withSession('flash', 'Привет мой маленький, прыщавый друг');
+        return json(['status' => 1])
+            ->withSession('flash', 'Привет мой маленький, прыщавый друг');
     }
 
     /**
@@ -40,6 +41,7 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return back()->withSession('flash', 'Где-то загрустил админ :(');
+        return redirect('/')
+            ->withSession('flash', 'Где-то загрустил админ :(');
     }
 }

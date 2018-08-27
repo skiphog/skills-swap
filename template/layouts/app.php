@@ -6,6 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="<?php echo $this->renderBlock('description'); ?>">
     <link rel="stylesheet" href="/css/app.css">
+    <?php echo $this->renderBlock('style'); ?>
+    <!--[if IE]><link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"><![endif]-->
+    <link rel="icon" type="image/png" sizes="32x32" href="/img/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/img/favicons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicons/favicon-96x96.png">
     <title><?php echo $this->renderBlock('title'); ?></title>
 </head>
 <body>

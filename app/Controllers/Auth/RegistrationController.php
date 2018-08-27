@@ -30,17 +30,16 @@ class RegistrationController extends Controller
             'token'    => hash_hmac('gost', bin2hex(random_bytes(16)) . implode('', $request->all()), time())
         ]);
 
-        $user = new User();
-        $user->fill($request)->save();
-
-        Mailer::to($user->email)->send(new RegistrationMail($user));
+        $user = User::create($request);
+        Mailer::to($user->email)
+            ->send(new RegistrationMail($user));
 
         return json(['status' => 1]);
     }
 
     public function token($token)
     {
-        if (!$user = User::findByTokenForConfirm($token)) {
+        if (!$user = User::findByField(['token' => $token, 'verified' => 0])) {
             throw new NotFoundException('Страница не найдена');
         }
 
@@ -73,9 +72,11 @@ class RegistrationController extends Controller
             'verified' => 0
         ]);
 
-        $user->fill($request)->save();
+        $user->fill($request)
+            ->save();
 
-        Mailer::to($user->email)->send(new RepassMail($user));
+        Mailer::to($user->email)
+            ->send(new RepassMail($user));
 
         return json(['status' => 1]);
     }
@@ -90,7 +91,7 @@ class RegistrationController extends Controller
      */
     public function confirm(ConfirmRequest $request)
     {
-        if (!$user = User::findByTokenForConfirm($request->post('token'))) {
+        if (!$user = User::findByField(['token' => $request->post('token'), 'verified' => 0])) {
             return json(['status' => 1]);
         }
 
@@ -100,7 +101,8 @@ class RegistrationController extends Controller
             'verified' => 1
         ]);
 
-        $user->fill($request)->save();
+        $user->fill($request)
+            ->save();
 
         Auth::attempt($user->id, $request->all());
 

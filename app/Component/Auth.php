@@ -33,11 +33,11 @@ class Auth
     {
         $id = self::identifier();
 
-        if (!empty($_SESSION[$id]) && $user = AuthUser::findById($_SESSION[$id])) {
+        if (!empty($_SESSION[$id]) && $user = AuthUser::findBySessionId($_SESSION[$id])) {
             return $this->user = $user;
         }
 
-        if (!empty($_COOKIE['token']) && $user = AuthUser::findByField('token', $_COOKIE['token'])) {
+        if (!empty($_COOKIE['token']) && $user = AuthUser::findByToken($_COOKIE['token'])) {
             $_SESSION[$id] = $user->id;
 
             return $this->user = $user;

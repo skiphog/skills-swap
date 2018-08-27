@@ -25,9 +25,30 @@ abstract class Model
     public static function findById($id)
     {
         $sql = /** @lang text */
-            'select * from ' . static::$table . ' where id = :id limit 1';
+            'select * from ' . static::$table . ' where id = ' . (int)$id . ' limit 1';
+
+        return db()->query($sql)
+            ->fetchObject(static::class);
+    }
+
+    /**
+     * @param string|array $name
+     * @param string|null  $value
+     *
+     * @return static
+     */
+    public static function findByField($name, $value = null)
+    {
+        $vars = $attr = \is_array($name) ? $name : [$name => $value];
+
+        array_walk($vars, function (&$v, $k) {
+            $v = $k . '=:' . $k;
+        });
+
+        $sql = 'select * from ' . static::$table . ' where ' . implode(' and ', $vars) . ' limit 1';
+
         $sth = db()->prepare($sql);
-        $sth->execute(['id' => $id]);
+        $sth->execute($attr);
 
         return $sth->fetchObject(static::class);
     }
@@ -111,6 +132,22 @@ abstract class Model
     public function isNew(): bool
     {
         return empty($this->id);
+    }
+
+    /**
+     * @todo Исключение при ошибке вставки
+     *
+     * @param iterable $data
+     *
+     * @return static
+     */
+    public static function create(iterable $data)
+    {
+        $model = new static();
+        $model->fill($data)
+            ->insert();
+
+        return $model;
     }
 
     /**
