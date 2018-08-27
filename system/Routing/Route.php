@@ -58,11 +58,7 @@ class Route
      */
     public function pattern()
     {
-        $pattern = preg_replace_callback('#{([^\}:]+):?([^\}]*?)\}#', function ($matches) {
-            return '(?P<' . $matches[1] . '>' . ($matches[2] ?: '.+') . ')';
-        }, $this->pattern);
-
-        return '#^' . $pattern . '$#';
+        return $this->pattern;
     }
 
     /**

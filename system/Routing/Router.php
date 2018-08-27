@@ -93,7 +93,7 @@ class Router
         $uri = $this->uri();
 
         foreach ((array)$this->routes[$_SERVER['REQUEST_METHOD']] as $route) {
-            if (preg_match($route->pattern(), $uri, $matches)) {
+            if (preg_match($this->resolvePattern($route->pattern()), $uri, $matches)) {
                 return [$route, $matches];
             }
         }
@@ -137,5 +137,14 @@ class Router
         $uri = ltrim($_SERVER['REQUEST_URI'], '/');
 
         return (false !== $pos = strpos($uri, '?')) ? substr($uri, 0, $pos) : $uri;
+    }
+
+    protected function resolvePattern($pattern)
+    {
+        $pattern = preg_replace_callback('#{([^\}:]+):?([^\}]*?)\}#', function ($matches) {
+            return '(?P<' . $matches[1] . '>' . ($matches[2] ?: '.+') . ')';
+        }, $pattern);
+
+        return '#^' . $pattern . '$#';
     }
 }
