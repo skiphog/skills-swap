@@ -3,3 +3,5 @@
 /node_modules
 /vendor
 /mix-manifest.json
+/public/robots.txt
+/config.php
