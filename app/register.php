@@ -1,19 +1,19 @@
 <?php
 
 return [
-    'config'  => function () {
+    \System\Config::class       => function () {
         return new \System\Config();
     },
-    'db'      => function () {
+    \System\DataBase::class     => function () {
         return new \System\DataBase();
     },
-    'auth'    => function () {
+    \App\Component\Auth::class  => function () {
         return (new \App\Component\Auth())->getAuthUser();
     },
-    'request' => function () {
+    \System\Http\Request::class => function () {
         return new \System\Http\Request();
     },
-    'cache'   => function () {
+    'cache'                     => function () {
         $config = config('cache');
 
         return new \System\Cache\Cache(new $config['driver']($config['path']));

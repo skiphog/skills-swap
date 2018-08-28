@@ -19,7 +19,7 @@ function app($name)
  */
 function config($key)
 {
-    return app('config')->get($key);
+    return app(\System\Config::class)->get($key);
 }
 
 /**
@@ -27,7 +27,7 @@ function config($key)
  */
 function db()
 {
-    return app('db');
+    return app(\System\DataBase::class);
 }
 
 /**
@@ -35,7 +35,7 @@ function db()
  */
 function auth()
 {
-    return app('auth');
+    return app(\App\Component\Auth::class);
 }
 
 /**
@@ -43,7 +43,7 @@ function auth()
  */
 function request()
 {
-    return app('request');
+    return app(\System\Http\Request::class);
 }
 
 /**
