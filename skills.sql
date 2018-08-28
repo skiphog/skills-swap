@@ -16,27 +16,27 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `profession`
+-- Table structure for table `professions`
 --
 
-DROP TABLE IF EXISTS `profession`;
+DROP TABLE IF EXISTS `professions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `profession` (
+CREATE TABLE `professions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `title` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `profession`
+-- Dumping data for table `professions`
 --
 
-LOCK TABLES `profession` WRITE;
-/*!40000 ALTER TABLE `profession` DISABLE KEYS */;
-INSERT INTO `profession` VALUES (1,'Актер'),(2,'Визажист'),(3,'Стилист'),(4,'Модельер'),(5,'Дизайнер ландшафта и интерьера/Web'),(6,'Мастер маникюра'),(7,'Парикмахер'),(8,'Художник – иллюстратор'),(9,'Тату-мастер'),(10,'Архитектор'),(11,'Скульптор'),(12,'Декоратор'),(13,'Садовник'),(14,'Флорист'),(15,'Фотограф'),(16,'Ювелир'),(17,'Камнерез'),(18,'Гончар'),(19,'Кузнец'),(20,'Парфюмер'),(21,'Стеклодув'),(22,'Пивовар '),(23,'Сомелье'),(24,'Повар'),(25,'Кулинар'),(26,'Видеограф'),(27,'Фотограф'),(28,'Ведущий'),(29,'Певец'),(30,'Режиссер'),(31,'Сценарист'),(32,'Переводчик'),(33,'Композитор'),(34,'Писатель'),(35,'Поэт'),(36,'Музыкант'),(37,'Диджей'),(38,'Дирижер'),(39,'Программист'),(40,'Портной'),(41,'Швея'),(42,'Хореограф'),(43,'Танцор'),(44,'Педагог'),(45,'Психолог'),(46,'Иллюзионист'),(47,'Персональный покупатель'),(48,'Гастрономический обозреватель');
-/*!40000 ALTER TABLE `profession` ENABLE KEYS */;
+LOCK TABLES `professions` WRITE;
+/*!40000 ALTER TABLE `professions` DISABLE KEYS */;
+INSERT INTO `professions` VALUES (1,'Актер'),(2,'Архитектор'),(3,'Ведущий'),(4,'Видеограф'),(5,'Визажист'),(6,'Гастрономический обозреватель'),(7,'Гончар'),(8,'Декоратор'),(9,'Диджей'),(10,'Дизайнер ландшафта и интерьера/Web'),(11,'Дирижер'),(12,'Иллюзионист'),(13,'Камнерез'),(14,'Композитор'),(15,'Кузнец'),(16,'Кулинар'),(17,'Мастер маникюра'),(18,'Модельер'),(19,'Музыкант'),(20,'Парикмахер'),(21,'Парфюмер'),(22,'Певец'),(23,'Педагог'),(24,'Переводчик'),(25,'Персональный покупатель'),(26,'Пивовар '),(27,'Писатель'),(28,'Повар'),(29,'Портной'),(30,'Поэт'),(31,'Программист'),(32,'Психолог'),(33,'Режиссер'),(34,'Садовник'),(35,'Скульптор'),(36,'Сомелье'),(37,'Стеклодув'),(38,'Стилист'),(39,'Сценарист'),(40,'Танцор'),(41,'Тату-мастер'),(42,'Флорист'),(43,'Фотограф'),(44,'Фотограф'),(45,'Хореограф'),(46,'Художник – иллюстратор'),(47,'Швея'),(48,'Ювелир');
+/*!40000 ALTER TABLE `professions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -68,7 +68,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'test@gtest.com','$2y$10$D6I1AmqWXvbpLUWWbjC/E./RHmdvDzQuh8dmPor8RKwyjauMEjqzG','648a2c135d7a8dd5409e9f3bc0e6468d390d16d9ca9abaa587c31d059d5231c0','Вася',1,1,1,'2018-08-27 08:56:50');
+INSERT INTO `users` VALUES (1,'test@test.com','$2y$10$D6I1AmqWXvbpLUWWbjC/E./RHmdvDzQuh8dmPor8RKwyjauMEjqzG','648a2c135d7a8dd5409e9f3bc0e6468d390d16d9ca9abaa587c31d059d5231c0','Вася',1,1,1,'2018-08-27 08:56:50');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -81,4 +81,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-28 16:03:45
+-- Dump completed on 2018-08-28 16:21:23
