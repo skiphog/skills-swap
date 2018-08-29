@@ -2,7 +2,6 @@
 
 namespace System;
 
-use System\Exceptions\HttpException;
 use System\Http\Request;
 use System\Exceptions\MultiException;
 use System\Exceptions\ForbiddenException;
