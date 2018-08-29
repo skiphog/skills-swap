@@ -37,9 +37,7 @@ class Config
      */
     public function set($key, $value = null): Config
     {
-        $data = \is_array($key) ? $key : [$key => $value];
-
-        foreach ($data as $index => $item) {
+        foreach (\is_array($key) ? $key : [$key => $value] as $index => $item) {
             $this->config[$index] = $item;
         }
 
