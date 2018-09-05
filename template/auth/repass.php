@@ -1,6 +1,6 @@
 <?php
 /**
- * @var \Wardex\View\View      $this
+ * @var \System\View      $this
  * @var \App\Models\Users\User $user
  */
 ?>
